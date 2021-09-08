@@ -12,7 +12,7 @@ Users have profile pages to keep track of their progress for individual topics a
 <h3>Technologies</h3>
 <p>ReactJS</p>
 <p>ExpressJS</p>
-<p>PostgreSQL/p>
+<p>PostgreSQL</p>
 
 
 <h1>MockUp 🎨</h1>

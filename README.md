@@ -17,7 +17,7 @@ Users have profile pages to keep track of their progress for individual topics a
 
 <h1>MockUp 🎨</h1>
 
-![quiz_app_mock](https://user-images.githubusercontent.com/61228520/132465022-643ecc31-9dce-48bd-9af2-682c2f911bdd.png)
+![Group 18quiz_app_mock](https://user-images.githubusercontent.com/61228520/132468966-0dd52cf9-25e3-46af-94b2-2083ff87020e.png)
 
 <h1>ERD 💾</h1>
 

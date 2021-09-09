@@ -1,46 +1,84 @@
 import env from 'react-dotenv';
-import React , {useState, useEffect} from 'react';
+import React , {useState, useEffect, useContext, useRef} from 'react';
 import alanBtn from "@alan-ai/alan-sdk-web";
+// import StateProvider from './store/store';
+import {StateContext} from './store/store';
 
 import Quiz from './components/Quiz';
 
 function App() {
+  const { name } = useContext
+  (StateContext);
 
-  // QUESTIONS FROM DB
+  // alan instance
+  const alanInstance = useRef(null);
+
+  // QUESTIONS FROM DB (preferably to be stored in global reducer and context)
   const qdb = [['what is js', 'what are variables?', 'what are data types?', 'what are objects'], ['is this an array?', 'is that also an array?', 'is any value true?', 'can i do something?']]
 
 
   const [qns, setQns] = useState(qdb);
-  let [qnsNumber, SetQnsNumber] = useState(0)
+  let [qnsNumber, SetQnsNumber] = useState(0);
+  const [signed, setSign] = useState(false);
 
 
   useEffect(() => {
-    alanBtn({
-      key: env.ALAN,
-      onCommand: (commandData) => {
 
-        if (commandData.command === 'yes') {
-          handleNextQs();
-        }
+    if (!alanInstance.current) {
 
-        if (commandData.answer) {
-          console.log('User selected : ', commandData.answer);
-          handleNextQs();
+      alanInstance.current =  alanBtn({
+        key: env.ALAN,
+        onCommand: (commandData) => {
+  
+          if (commandData.command === 'yes') {
+            handleNextQs();
+          }
+  
+          if (commandData.answer) {
+  
+            /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
+             also use this data to instantly check if answer selected is correct and react accordingly
+             vvvvvvvvvvvvvvvv
+             */
+  
+            alert('User selected : ', commandData.answer);
+            handleNextQs();
+          }
+  
+          // auto play alan
+          if (commandData.command === 'auto') {
+            alert('auto');
+          }
         }
-      }
-    })
+      })
+    }
+    // AUTO ALAN
+    // alanInstance.current.activate();
+    // alanInstance.current.playText(`Hello ${name}! Welcome to the quiz. What topic would you like to practice today?`);
+    // alanInstance.current.deactivate();
   }, [])
 
   // UPDATE THE QUESTION STATE
   const handleNextQs = () => {
-    SetQnsNumber(qnsNumber += 1)
+    // SetQnsNumber(qnsNumber += 1)
+    console.log('***&#*(sjsjk');
   }
 
+  //  FEATURE FOR CLIENT SIDE AUTHORISATION (show all quizzes but allow only basics for non log-in)
+  const handleStart = () => {
+    setSign(true)
+    if (!signed) {
+      alert('sign in first')
+      return;
+    }
+    alert('welcome!')
+  }
 
   return (
     <div className="App">
-      Quiz App
-      <Quiz questions={qns[qnsNumber]} nextQs={handleNextQs}/>
+        <h1 style={{color: !signed ? 'red' : 'green'}}>Quiz App</h1>
+        <button onClick={handleStart}>Start</button>
+        <Quiz questions={qns[qnsNumber]} nextQs={handleNextQs}/>
     </div>
   );
 }

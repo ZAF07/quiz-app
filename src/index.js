@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
 
-ReactDOM.render(
+import StateProvider from './store/store';
 
-    <App />,
- 
+
+ReactDOM.render(
+  <StateProvider>
+    <App />
+  </StateProvider>,
   document.getElementById('root')
 );
 

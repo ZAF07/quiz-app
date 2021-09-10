@@ -1,14 +1,12 @@
 import env from 'react-dotenv';
-import React , {useState, useEffect, useContext, useRef} from 'react';
+import React , {useState, useEffect, useRef} from 'react';
 import alanBtn from "@alan-ai/alan-sdk-web";
-// import StateProvider from './store/store';
-import {StateContext} from './store/store';
+
 
 import Quiz from './components/Quiz';
 
 function App() {
-  const { name } = useContext
-  (StateContext);
+
 
   // alan instance
   const alanInstance = useRef(null);
@@ -16,7 +14,7 @@ function App() {
   // QUESTIONS FROM DB (preferably to be stored in global reducer and context)
   const qdb = [['what is js', 'what are variables?', 'what are data types?', 'what are objects'], ['is this an array?', 'is that also an array?', 'is any value true?', 'can i do something?']]
 
-
+  const [quizStarted, setQuizStarted] = useState(false);
   const [qns, setQns] = useState(qdb);
   let [qnsNumber, SetQnsNumber] = useState(0);
   const [signed, setSign] = useState(false);
@@ -60,25 +58,22 @@ function App() {
 
   // UPDATE THE QUESTION STATE
   const handleNextQs = () => {
-    // SetQnsNumber(qnsNumber += 1)
+    SetQnsNumber(qnsNumber += 1)
     console.log('***&#*(sjsjk');
   }
 
   //  FEATURE FOR CLIENT SIDE AUTHORISATION (show all quizzes but allow only basics for non log-in)
   const handleStart = () => {
+    setQuizStarted(true);
     setSign(true)
-    if (!signed) {
-      alert('sign in first')
-      return;
-    }
-    alert('welcome!')
   }
 
   return (
     <div className="App">
         <h1 style={{color: !signed ? 'red' : 'green'}}>Quiz App</h1>
         <button onClick={handleStart}>Start</button>
-        <Quiz questions={qns[qnsNumber]} nextQs={handleNextQs}/>
+        {quizStarted && <Quiz questions={qns[qnsNumber]} nextQs={handleNextQs}/>}
+        {/* <Quiz questions={qns[qnsNumber]} nextQs={handleNextQs}/> */}
     </div>
   );
 }

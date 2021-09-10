@@ -2,8 +2,8 @@ import env from 'react-dotenv';
 import React , {useState, useEffect, useRef} from 'react';
 import alanBtn from "@alan-ai/alan-sdk-web";
 
-
-import Quiz from './components/Quiz';
+import Home from './components/home/Home';
+import Quiz from './components/quiz/Quiz';
 
 function App() {
 
@@ -14,8 +14,10 @@ function App() {
   // QUESTIONS FROM DB (preferably to be stored in global reducer and context)
   const qdb = [['what is js', 'what are variables?', 'what are data types?', 'what are objects'], ['is this an array?', 'is that also an array?', 'is any value true?', 'can i do something?']]
 
-  const [quizStarted, setQuizStarted] = useState(false);
-  const [qns, setQns] = useState(qdb);
+  const [quizSelected, setQuizSelected] = useState(false);
+  const [topic, setTopic] = useState(null)
+  const [question, setQuestion] = useState('How do we join two arrays?')
+  const [options, setOptions] = useState(qdb);
   let [qnsNumber, SetQnsNumber] = useState(0);
   const [signed, setSign] = useState(false);
 
@@ -63,17 +65,25 @@ function App() {
   }
 
   //  FEATURE FOR CLIENT SIDE AUTHORISATION (show all quizzes but allow only basics for non log-in)
-  const handleStart = () => {
-    setQuizStarted(true);
+  const handleStart = (topic) => {
+    setQuizSelected(true);
     setSign(true)
+    setTopic(topic)
   }
 
   return (
     <div className="App">
-        <h1 style={{color: !signed ? 'red' : 'green'}}>Quiz App</h1>
-        <button onClick={handleStart}>Start</button>
-        {quizStarted && <Quiz questions={qns[qnsNumber]} nextQs={handleNextQs}/>}
-        {/* <Quiz questions={qns[qnsNumber]} nextQs={handleNextQs}/> */}
+        <h1 style={{color: !signed ? 'red' : 'green'}}>🚀 Quiz App</h1>
+  
+        {
+          !quizSelected &&
+          <Home enterQuiz={handleStart} />
+        }
+        {
+          quizSelected &&
+          <Quiz topic={topic} question={question} options={options[qnsNumber]} nextQs={handleNextQs}/>
+        }
+
     </div>
   );
 }

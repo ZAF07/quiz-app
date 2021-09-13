@@ -1,15 +1,26 @@
 import env from 'react-dotenv';
 import React , {useState, useEffect, useRef} from 'react';
+import { BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useLocation,
+  useParams
+} from 'react-router-dom';
 import alanBtn from "@alan-ai/alan-sdk-web";
 
 import Home from './components/home/Home';
 import Quiz from './components/quiz/Quiz';
+
+import questions from './utils/questions';
+import Resources from './components/resources/Resources';
 
 function App() {
 
 
   // alan instance
   const alanInstance = useRef(null);
+  const currentPage = window.location.pathname;
 
   // QUESTIONS FROM DB (preferably to be stored in global reducer and context)
   const qdb = [['what is js', 'what are variables?', 'what are data types?', 'what are objects'], ['is this an array?', 'is that also an array?', 'is any value true?', 'can i do something?']]
@@ -18,13 +29,16 @@ function App() {
   const [topic, setTopic] = useState(null)
   const [question, setQuestion] = useState('How do we join two arrays?')
   const [options, setOptions] = useState(qdb);
+  // SEND QUESTIONS, ANSWER AND OPTIONS
+  const [currQuestion, setCurrQuestion] = useState(null);
   let [qnsNumber, SetQnsNumber] = useState(0);
   const [signed, setSign] = useState(false);
 
+  console.log('hopme' ,currQuestion);
 
   useEffect(() => {
 
-    if (!alanInstance.current) {
+    if (!alanInstance.current && currentPage === '/') {
 
       alanInstance.current =  alanBtn({
         key: env.ALAN,
@@ -41,13 +55,13 @@ function App() {
              vvvvvvvvvvvvvvvv
              */
   
-            alert('User selected : ', commandData.answer);
+            // alert('User selected : ', commandData.answer);
             handleNextQs();
           }
   
           // auto play alan
-          if (commandData.command === 'auto') {
-            alert('auto');
+          if (commandData.startQ) {
+            handleStart(commandData.startQ)
           }
         }
       })
@@ -61,7 +75,7 @@ function App() {
   // UPDATE THE QUESTION STATE
   const handleNextQs = () => {
     SetQnsNumber(qnsNumber += 1)
-    console.log('***&#*(sjsjk');
+    console.log('***&#*(sjsjk -> ',qnsNumber );
   }
 
   //  FEATURE FOR CLIENT SIDE AUTHORISATION (show all quizzes but allow only basics for non log-in)
@@ -69,22 +83,36 @@ function App() {
     setQuizSelected(true);
     setSign(true)
     setTopic(topic)
+    setCurrQuestion(questions[qnsNumber]);
   }
 
-  return (
-    <div className="App">
-        <h1 style={{color: !signed ? 'red' : 'green'}}>🚀 Quiz App</h1>
-  
-        {
-          !quizSelected &&
-          <Home enterQuiz={handleStart} />
-        }
-        {
-          quizSelected &&
-          <Quiz topic={topic} question={question} options={options[qnsNumber]} nextQs={handleNextQs}/>
-        }
 
-    </div>
+  return (
+    <Router>
+      <div className="App">
+          <h1 style={{color: !signed ? 'red' : 'green'}}>🚀 Quiz App</h1>
+    
+          {
+            !quizSelected &&
+            currentPage === '/' &&
+            <Home enterQuiz={handleStart} />
+          }
+          {
+            quizSelected &&
+            currentPage === '/' &&
+            <Quiz topic={topic} question={questions[qnsNumber]} options={options[qnsNumber]} nextQs={handleNextQs}/>
+          }
+          <Switch>
+            {/* <Redirect exact from='/' to='/quiz/:start' />  */}
+            <Route exact path="/profile">
+              {'profile page'}
+            </Route>
+            <Route exact path="/resources/:javascript">
+              <Resources />
+            </Route>
+          </Switch>
+      </div>
+    </Router>
   );
 }
 

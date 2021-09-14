@@ -8,6 +8,7 @@ import { BrowserRouter as Router,
   useParams
 } from 'react-router-dom';
 import alanBtn from "@alan-ai/alan-sdk-web";
+import axios from 'axios';
 
 import Home from './components/home/Home';
 import Quiz from './components/quiz/Quiz';
@@ -37,6 +38,11 @@ function App() {
   console.log('hopme' ,currQuestion);
 
   useEffect(() => {
+
+    axios.get('http://localhost:5000')
+    .then(({data}) => {
+      console.log(data);
+    })
 
     if (!alanInstance.current && currentPage === '/') {
 
@@ -68,7 +74,7 @@ function App() {
     }
     // AUTO ALAN
     // alanInstance.current.activate();
-    // alanInstance.current.playText(`Hello ${name}! Welcome to the quiz. What topic would you like to practice today?`);
+    // alanInstance.current.playText(`Hello effy! Welcome to the quiz. What topic would you like to practice today?`);
     // alanInstance.current.deactivate();
   }, [])
 

@@ -43,6 +43,7 @@ if (question) {
   if (question.correct_answer === question.options[0]) {
     // USED REFS SO THAT COMPONENT DONT RERENDER AT EVVEERY CORRECT ANSWER
     correctAnswerRef.current += 1
+    console.log('correct', correctAnswerRef.current)
   }
 }
 

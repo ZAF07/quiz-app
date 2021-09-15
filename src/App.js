@@ -39,12 +39,6 @@ function App() {
 
   useEffect(() => {
 
-    axios.get('http://localhost:5000')
-    .then(({data}) => {
-      setQuestion(data)
-      console.log(data);
-    })
-
     if (!alanInstance.current && currentPage === '/') {
 
       alanInstance.current =  alanBtn({
@@ -87,6 +81,13 @@ function App() {
 
   //  FEATURE FOR CLIENT SIDE AUTHORISATION (show all quizzes but allow only basics for non log-in)
   const handleStart = (topic) => {
+
+       axios.get('http://localhost:5000')
+    .then(({data}) => {
+      setQuestion(data)
+      console.log(data);
+    })
+
     setQuizSelected(true);
     setSign(true)
     setTopic(topic)

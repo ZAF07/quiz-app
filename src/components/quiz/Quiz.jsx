@@ -108,7 +108,7 @@ let ifHaveQuestions;
 //     </>
 //   );
 // }
-if (qNa.questionsResults.length) {
+if (qNa && qNum < qNa.questionsResults.length) {
   ifHaveQuestions = (
     <>
       <h1>{topic}</h1> 
@@ -141,7 +141,7 @@ if (qNa.questionsResults.length) {
       {/* {currentOptions? <h3>{question.question} 🧐</h3> : 'None 😫'} */}
        {/* {question && ifHaveQuestions}
        {!question && noQuestion} */}
-       {qNa.questionsResults.length > 0 ? ifHaveQuestions : noQuestion}
+       { qNa && qNum < qNa.questionsResults.length ? ifHaveQuestions : noQuestion}
 
 
       {/* <h3>{question.question} 🧐</h3> */}
@@ -152,6 +152,8 @@ if (qNa.questionsResults.length) {
       {/* <button onClick={() => nextQs()}>Next</button> */}
       {/* <button onClick={() => nextQs()}>Next</button> */}
       <p ref={scoreParaRef}></p>
+
+
       <div style={{marginLeft: '15%', marginRight: '15%'}}>
         <SyntaxHighlighter language="javascript" style={docco}>
         {code}

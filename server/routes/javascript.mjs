@@ -1,9 +1,9 @@
 import express from 'express';
-import {profileControl, homeControl} from '../controllers/profile.mjs';
+import {profileControl, javascriptQnA} from '../controllers/profile.mjs';
 
 const router = express.Router();
 
-router.get('/', homeControl);
+router.get('/', javascriptQnA);
 router.get('/profile', profileControl);
 
 export default router;

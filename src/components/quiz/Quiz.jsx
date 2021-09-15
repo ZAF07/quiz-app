@@ -12,118 +12,72 @@ import docco from 'react-syntax-highlighter/dist/esm/styles/hljs/docco';
 SyntaxHighlighter.registerLanguage('javascript', js);
 
 
-  const code = `function main(input {
-    return 'hello world'
-  }        
-    `;
+  // const code = `function main(input {
+  //   return 'hello world'
+  // }        
+  //   `;
+
+
+  const code = `function main(input\n {\n  return 'hello world' \n }`;
 
     
 
-function Quiz(props) {
+function Quiz({topic, options, nextQs, qNa, qNum}) {
   console.log('QUIZ RENDERED');
 
-  // alan instance
   const alanInstance = useRef(null);
   const scoreParaRef = useRef();
-  const correctAnswerRef = useRef(0)
+  const correctAnswerRef = useRef()
 
-  if (!alanInstance.current) {
-
-    alanInstance.current = alanBtn({
-      onCommand:(commandData) => {
-        if (commandData.speak) {
-          alanBtn.activate();
-          
-        }
-      }
-    })
+  if (qNa && qNum < qNa.questionsResults.length){
+    correctAnswerRef.current = qNa.questionsResults[qNum].answer
+    scoreParaRef.current.innerHTML = correctAnswerRef.current
+  }
+  console.log('answer -> ', qNum);
+  if (qNa && qNum >= qNa.questionsResults.length) {
+    scoreParaRef.current.innerHTML = `${qNum} score`
   }
 
 
-  // PROBABLY WANT TO USE useContext and useReducer for this one
-  const {topic, question, options, nextQs, qNa, qNum} = props;
-  console.log('from qwuix' ,question);
-  console.log(qNa);
+  useEffect(() => {
 
-console.log('quiz --> ', question);
+    if (!alanInstance.current) {
+    
+      alanInstance.current = alanBtn({
+        onCommand:(commandData) => {
+          if (commandData.speak) {
+            alanBtn.activate();
+            
+          }
+        }
+      })
+    }
+  }, [])
+
+  // console.log('from qwuix' ,question);
+  console.log('***** FROM QUIZ --> ', qNa);
+  console.log('qNum --> ', qNum);
+
+// console.log('quiz --> ', question);
 
 //  ALAN SPEAKS AFTER EACH QUIZ COMPLETION
-if (!question) {
-  scoreParaRef.current.innerHTML = correctAnswerRef.current
-  // alanInstance.current.activate();
-  // alanInstance.current.playText("Nice work! You've completed the quiz. Want to keep track of how you did? Sign up now!");
+// if (!question) {
+//   scoreParaRef.current.innerHTML = correctAnswerRef.current
+//   // alanInstance.current.activate();
+//   // alanInstance.current.playText("Nice work! You've completed the quiz. Want to keep track of how you did? Sign up now!");
 
-};
-
-// console.log('answer match ->>> ', question.correct_answer === question.options[0]);
-
-// CHECK FOR CORRECT ANSWER
-if (question) {
-  if (question.correct_answer === question.options[0]) {
-    // USED REFS SO THAT COMPONENT DONT RERENDER AT EVVEERY CORRECT ANSWER
-    correctAnswerRef.current += 1
-    console.log('correct', correctAnswerRef.current)
-  }
-}
+// };
 
 const optionsLetter = ['A', 'B', 'C', 'D'];
 
-  // RENDERING THE OPTIONS IN LIST
-  let currentOptions
-  // if (question && question.options.length) {
-  //   currentOptions= question.options.map((qs, key) => (
-  //     <li key={key}>{optionsLetter[key]}: {qs}</li>
-  //   ))
-  // };
-    if (qNa && qNa.choicesResults.length) {
-    currentOptions= qNa.choicesResults.map((qs, key) => (
-      <li key={key}>{optionsLetter[key]}: {qs.choice}</li>
-    ))
-  };
-
   let selected;
-  if (question && question.options.length) {
-    
-     selected = question.options.map((a, i) => (
+  if (qNa && qNa.choicesResults.length) {  
+     selected = qNa.choicesResults.map((a, i) => (
        <>
-       
        <option key={a} value={a[i]}>{optionsLetter[i]}</option>
      </>
      )) 
   }
-
-let ifHaveQuestions;
-// if (question) {
-//   ifHaveQuestions = (
-//     <>
-//       <h1>{topic}</h1> 
-//       <h3>{question.question} 🧐</h3>
-//       <ul>
-//         {currentOptions? currentOptions: 'No Question'}    
-//       </ul>
-//       <select>
-//       {selected}
-//       </select>
-//       <button onClick={() => nextQs()}>Next</button>
-//     </>
-//   );
-// }
-if (qNa && qNum < qNa.questionsResults.length) {
-  ifHaveQuestions = (
-    <>
-      <h1>{topic}</h1> 
-      {/* <h3>{qNa.questionsResults.shift().question} 🧐</h3> */}
-      <h3>{qNa.questionsResults[qNum].question} 🧐</h3>
-      <ul>
-        {currentOptions? currentOptions: 'No Question'}    
-      </ul>
-      <select>
-      {selected}
-      </select>
-      <button onClick={() => nextQs()}>Next</button>
-    </>
-  );
-}
 
   const noQuestion = (
     <>
@@ -132,33 +86,66 @@ if (qNa && qNum < qNa.questionsResults.length) {
     </>
   )
 
+  const codeSnippet = (code, need) => {
+    if (need) {
+      return (
+        <div style={{marginLeft: '15%', marginRight: '15%'}}>
+          <SyntaxHighlighter language="javascript" style={docco}>
+          {need}
+          </SyntaxHighlighter>
+        </div>
+      )
+    }
+    return null
+  }
+
+  const h = (id) => {
+    const choicesList = qNa.choicesResults.filter((choice) => choice.question_id === id);
+
+    let currentOptions
+ 
+      currentOptions= choicesList.map((qs, key) => (
+        <li key={key}>{optionsLetter[key]}: {qs.choice}</li>
+    )) 
+
+    console.log('thisis vchia --<> ', choicesList);
+    return (
+      <>
+      <small>{qNa.questionsResults[qNum].answer}</small>
+      <h1>{topic}</h1> 
+      <h3>{qNa.questionsResults[qNum].question} 🧐</h3>
+      {codeSnippet(code, qNa.questionsResults[qNum].require_snippet)}
+      <ul>
+        {currentOptions? currentOptions: 'No Question'}    
+      </ul>
+      <select>
+      {selected}
+      </select>
+      <button onClick={() => nextQs()}>Next</button>
+      <hr/>
+      {/* <h1>require snippet: {qNa.questionsResults[0].require_snippet}</h1>
+      <h1>question id: {qNa.questionsResults[0].question_id}</h1> */}
+      </>
+    )
+  }
+
+  if (qNa && qNum > qNa.questionsResults.length) {
+    scoreParaRef.current.innerHTML = qNum
+  }
+
   return (
     <div>
-      {/* CONSUMING THE GLOBAL STATE */}
-    
-      {/* <h1>{topic}</h1> */}
-
-      {/* {currentOptions? <h3>{question.question} 🧐</h3> : 'None 😫'} */}
-       {/* {question && ifHaveQuestions}
-       {!question && noQuestion} */}
-       { qNa && qNum < qNa.questionsResults.length ? ifHaveQuestions : noQuestion}
-
-
-      {/* <h3>{question.question} 🧐</h3> */}
-      {/* <ul>
-        {currentOptions? currentOptions: 'No Question'}
+      { qNa && qNum < qNa.questionsResults.length ? h(qNa.questionsResults[qNum].question_id) : noQuestion}
+      
    
-      </ul> */}
-      {/* <button onClick={() => nextQs()}>Next</button> */}
-      {/* <button onClick={() => nextQs()}>Next</button> */}
-      <p ref={scoreParaRef}></p>
+      <p ref={scoreParaRef}>a</p>
 
 
-      <div style={{marginLeft: '15%', marginRight: '15%'}}>
+      {/* <div style={{marginLeft: '15%', marginRight: '15%'}}>
         <SyntaxHighlighter language="javascript" style={docco}>
         {code}
-      </SyntaxHighlighter>
-      </div>
+        </SyntaxHighlighter>
+      </div> */}
 
       Quiz Component
     </div>

@@ -8,7 +8,7 @@ function Home(props) {
     <div>
       <h1>Let's start to learn !</h1>
 
-      <button onClick={() => enterQuiz('Javascript 🏄‍♂️')}>Javascript</button>
+      <button onClick={() => enterQuiz('javascript')}>Javascript</button>
       <a href='/quiz/javascript'>Js</a>
 
       <button onClick={() => enterQuiz('Python 🐍')}>Pyhton</button>

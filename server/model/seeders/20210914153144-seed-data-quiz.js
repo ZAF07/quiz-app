@@ -2,20 +2,23 @@ module.exports = {
   up: async (queryInterface) => {
     const questionsList = [
       {
-        question: 'What is to be added to this code for it to work?',
+        question: 'Would this code work? If not, what has to be added or removed for it to work?',
         answer: ')',
+        require_snippet: "function main(input\n {\n  return 'hello world' \n }",
         created_at: new Date(),
         updated_at: new Date(),
       },
     {
         question: 'What is a component?',
         answer: 'Components are independent and reusable bits of code. They serve the same purpose as JavaScript functions, but work in isolation and return HTML',
+      
         created_at: new Date(),
         updated_at: new Date(),
       },
     {
         question: 'How many times does a component rerenders?',
         answer: 'Once when it is rendered and any other time it\'s (or it\'s parent\'s) props or state changes',
+        
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -40,18 +43,18 @@ module.exports = {
       });
 
       choices.push({
-        choice: 'other item',
+        choice: 'Missing the keyword, "var", "const" or "let"',
         question_id: question.question_id,
         created_at: new Date(),
         updated_at: new Date(),
       });
 
       choices.push({
-        choice: 'iitemmm',
+        choice: 'Seems fine. This code will return "Hello World"',
         question_id: question.question_id,
         created_at: new Date(),
         updated_at: new Date(),
-      });
+    });
     }
 
     queryInterface.bulkInsert('js_choices', choices);

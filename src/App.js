@@ -41,16 +41,17 @@ function App() {
           //   handleNextQs();
           // }
   
-          // if (commandData.answer) {
+          if (commandData.answer) {
   
-          //   /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
-          //    also use this data to instantly check if answer selected is correct and react accordingly
-          //    vvvvvvvvvvvvvvvv
-          //    */
+            /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
+             also use this data to instantly check if answer selected is correct and react accordingly
+             vvvvvvvvvvvvvvvv
+             */
   
-          //   // alert('User selected : ', commandData.answer);
-          //   handleNextQs();
-          // }
+            // alert('User selected : ', commandData.answer);
+            console.log('ANSWERED 434344');
+            handleNextQs();
+          }
   
           // auto play alan
           if (commandData.startQ) {
@@ -97,7 +98,7 @@ function App() {
           {
             quizSelected &&
             currentPage === '/' &&
-            <Quiz topic={topic} qNa={question} qNum={qnsNumber} nextQs={handleNextQs}/>
+            <Quiz topic={topic} questionFromDB={question} questionNum={qnsNumber} nextQs={handleNextQs}/>
           }
 
           

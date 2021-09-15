@@ -22,20 +22,20 @@ SyntaxHighlighter.registerLanguage('javascript', js);
 
     
 
-function Quiz({topic, options, nextQs, qNa, qNum}) {
+function Quiz({topic, nextQs, questionFromDB, questionNum}) {
   console.log('QUIZ RENDERED');
 
   const alanInstance = useRef(null);
   const scoreParaRef = useRef();
   const correctAnswerRef = useRef()
 
-  if (qNa && qNum < qNa.questionsResults.length){
-    correctAnswerRef.current = qNa.questionsResults[qNum].answer
+  if (questionFromDB && questionNum < questionFromDB.questionsResults.length){
+    correctAnswerRef.current = questionFromDB.questionsResults[questionNum].answer
     scoreParaRef.current.innerHTML = correctAnswerRef.current
   }
-  console.log('answer -> ', qNum);
-  if (qNa && qNum >= qNa.questionsResults.length) {
-    scoreParaRef.current.innerHTML = `${qNum} score`
+  console.log('answer -> ', questionNum);
+  if (questionFromDB && questionNum >= questionFromDB.questionsResults.length) {
+    scoreParaRef.current.innerHTML = `${questionNum} score`
   }
 
 
@@ -55,8 +55,8 @@ function Quiz({topic, options, nextQs, qNa, qNum}) {
   }, [])
 
   // console.log('from qwuix' ,question);
-  console.log('***** FROM QUIZ --> ', qNa);
-  console.log('qNum --> ', qNum);
+  console.log('***** FROM QUIZ --> ', questionFromDB);
+  console.log('questionNum --> ', questionNum);
 
 // console.log('quiz --> ', question);
 
@@ -71,8 +71,8 @@ function Quiz({topic, options, nextQs, qNa, qNum}) {
 const optionsLetter = ['A', 'B', 'C', 'D'];
 
   let selected;
-  if (qNa && qNa.choicesResults.length) {  
-     selected = qNa.choicesResults.map((a, i) => (
+  if (questionFromDB && questionFromDB.choicesResults.length) {  
+     selected = questionFromDB.choicesResults.map((a, i) => (
        <>
        <option key={a} value={a[i]}>{optionsLetter[i]}</option>
      </>
@@ -99,8 +99,8 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
     return null
   }
 
-  const h = (id) => {
-    const choicesList = qNa.choicesResults.filter((choice) => choice.question_id === id);
+  const questionAndChoices = (id) => {
+    const choicesList = questionFromDB.choicesResults.filter((choice) => choice.question_id === id);
 
     let currentOptions
  
@@ -111,10 +111,10 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
     console.log('thisis vchia --<> ', choicesList);
     return (
       <>
-      <small>{qNa.questionsResults[qNum].answer}</small>
+      <small>{questionFromDB.questionsResults[questionNum].answer}</small>
       <h1>{topic}</h1> 
-      <h3>{qNa.questionsResults[qNum].question} 🧐</h3>
-      {codeSnippet(code, qNa.questionsResults[qNum].require_snippet)}
+      <h3>{questionFromDB.questionsResults[questionNum].question} 🧐</h3>
+      {codeSnippet(code, questionFromDB.questionsResults[questionNum].require_snippet)}
       <ul>
         {currentOptions? currentOptions: 'No Question'}    
       </ul>
@@ -123,19 +123,19 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
       </select>
       <button onClick={() => nextQs()}>Next</button>
       <hr/>
-      {/* <h1>require snippet: {qNa.questionsResults[0].require_snippet}</h1>
-      <h1>question id: {qNa.questionsResults[0].question_id}</h1> */}
+      {/* <h1>require snippet: {questionFromDB.questionsResults[0].require_snippet}</h1>
+      <h1>question id: {questionFromDB.questionsResults[0].question_id}</h1> */}
       </>
     )
   }
 
-  if (qNa && qNum > qNa.questionsResults.length) {
-    scoreParaRef.current.innerHTML = qNum
+  if (questionFromDB && questionNum > questionFromDB.questionsResults.length) {
+    scoreParaRef.current.innerHTML = questionNum
   }
 
   return (
     <div>
-      { qNa && qNum < qNa.questionsResults.length ? h(qNa.questionsResults[qNum].question_id) : noQuestion}
+      { questionFromDB && questionNum < questionFromDB.questionsResults.length ? questionAndChoices(questionFromDB.questionsResults[questionNum].question_id) : noQuestion}
       
    
       <p ref={scoreParaRef}>a</p>

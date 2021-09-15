@@ -28,7 +28,7 @@ function App() {
 
   const [quizSelected, setQuizSelected] = useState(false);
   const [topic, setTopic] = useState(null)
-  const [question, setQuestion] = useState('How do we join two arrays?')
+  const [question, setQuestion] = useState(null)
   const [options, setOptions] = useState(qdb);
   // SEND QUESTIONS, ANSWER AND OPTIONS
   const [currQuestion, setCurrQuestion] = useState(null);
@@ -41,6 +41,7 @@ function App() {
 
     axios.get('http://localhost:5000')
     .then(({data}) => {
+      setQuestion(data)
       console.log(data);
     })
 
@@ -106,7 +107,7 @@ function App() {
           {
             quizSelected &&
             currentPage === '/' &&
-            <Quiz topic={topic} question={questions[qnsNumber]} options={options[qnsNumber]} nextQs={handleNextQs}/>
+            <Quiz topic={topic} question={questions[qnsNumber]} options={options.shift()} nextQs={handleNextQs} qNa={question} qNum={qnsNumber}/>
           }
           <Switch>
             {/* <Redirect exact from='/' to='/quiz/:start' />  */}

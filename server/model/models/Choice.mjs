@@ -1,6 +1,6 @@
 export default function initChoiceModel(sequelize, DataTypes) {
   return sequelize.define(
-    'choice',
+    'js_choice',
     {
       question_id: {
         type: DataTypes.INTEGER,

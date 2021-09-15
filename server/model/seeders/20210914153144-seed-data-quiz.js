@@ -2,8 +2,8 @@ module.exports = {
   up: async (queryInterface) => {
     const questionsList = [
       {
-        question: 'What is reactJS',
-        answer: 'A front end library',
+        question: 'What is to be added to this code for it to work?',
+        answer: ')',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -33,7 +33,7 @@ module.exports = {
       const question = questions[i];
 
       choices.push({
-        choice: 'some item',
+        choice: ')',
         question_id: question.question_id,
         created_at: new Date(),
         updated_at: new Date(),

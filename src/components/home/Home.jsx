@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+
 
 function Home(props) {
 
@@ -11,6 +12,7 @@ function Home(props) {
       <a href='/quiz/javascript'>Js</a>
 
       <button onClick={() => enterQuiz('Python 🐍')}>Pyhton</button>
+
     </div>
   )
 }

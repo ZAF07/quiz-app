@@ -1,7 +1,7 @@
 import sequelizePackage from 'sequelize';
 import allConfig from '../config/config.js';
 
-import initChoiceModel from './Choice';
+import initChoiceModel from './Choice.mjs';
 import initQuestionModel from './Question.mjs';
 
 const { Sequelize } = sequelizePackage;

@@ -1,6 +1,6 @@
 export default function initQuestionModel(sequelize, DataTypes) {
   return sequelize.define(
-    'question',
+    'js_question',
     {
       question_id: {
         allowNull: false,

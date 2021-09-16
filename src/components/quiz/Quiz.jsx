@@ -29,6 +29,7 @@ function Quiz({topic, nextQs, questionFromDB, questionNum}) {
   const scoreParaRef = useRef();
   const correctAnswerRef = useRef()
 
+
   if (questionFromDB && questionNum < questionFromDB.questionsResults.length){
     correctAnswerRef.current = questionFromDB.questionsResults[questionNum].answer
     scoreParaRef.current.innerHTML = correctAnswerRef.current
@@ -36,6 +37,9 @@ function Quiz({topic, nextQs, questionFromDB, questionNum}) {
   console.log('answer -> ', questionNum);
   if (questionFromDB && questionNum >= questionFromDB.questionsResults.length) {
     scoreParaRef.current.innerHTML = `${questionNum} score`
+  }
+    if (questionFromDB && questionNum >= questionFromDB.questionsResults.length){
+      alert('larger, done with quiz')
   }
 
 

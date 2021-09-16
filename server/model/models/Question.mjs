@@ -9,7 +9,7 @@ export default function initQuestionModel(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
       },
       question: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       answer: {
         type: DataTypes.STRING,

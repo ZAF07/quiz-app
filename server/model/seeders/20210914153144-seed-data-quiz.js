@@ -8,20 +8,34 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
-    // {
-    //     question: 'What is a component?',
-    //     answer: 'Components are independent and reusable bits of code. They serve the same purpose as JavaScript functions, but work in isolation and return HTML',
-      
-    //     created_at: new Date(),
-    //     updated_at: new Date(),
-    //   },
-    // {
-    //     question: 'How many times does a component rerenders?',
-    //     answer: 'Once when it is rendered and any other time it\'s (or it\'s parent\'s) props or state changes',
-        
-    //     created_at: new Date(),
-    //     updated_at: new Date(),
-    //   },
+    {
+        question: 'What is the value of the variable words after the following code runs?',
+        answer: "[ 'olleH', 'dlroW' ]",
+        require_snippet: "let words = ['Hello', 'World'];\nwords.forEach((word, i) => {\n (words[i] = word.split('').reverse().join('').toLowerCase())});",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    {
+        question: 'What does the following code outputs?',
+        answer: '0 [ 1 ]',
+        require_snippet: "function func(a, b) {\n a += 1\n b.push(1)\n}\nconst a = 0;\nconst b = []\nfunc(a, b)\nconsole.log(a, b);",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        question: "Select the correct answer",
+        answer: "24",
+        require_snippet: "const f = n => n <= 1 ? 1 : n * f(n - 1);\nlet g = f(4)",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        question: "Would this code work? If not, what has to be added or removed?",
+        answer: ")",
+        require_snippet: "function main(input {\n return 'Hello, World'\n}",
+        created_at: new Date(),
+        updated_at: new Date(),
+      }
     ];
 
     // Insert categories before items because items reference categories
@@ -32,29 +46,124 @@ module.exports = {
     );
 
     const choices = [];
-    for (let i = 0; i < questions.length; i++) {
-      const question = questions[i];
 
-      choices.push({
+    const choicesSet = [
+      [
+        {
         choice: "return recursiveStringReverse(lastChars) + firstChar; ",
-        question_id: question.question_id,
         created_at: new Date(),
         updated_at: new Date(),
-      });
-
-      choices.push({
+      },
+      {
         choice: "return lastChars + firstChar;",
-        question_id: question.question_id,
         created_at: new Date(),
         updated_at: new Date(),
-      });
-
-      choices.push({
+      },
+      {
         choice: "return firstChar + recursiveStringReverse(lastChars)",
-        question_id: question.question_id,
         created_at: new Date(),
         updated_at: new Date(),
-    });
+    }
+      ],
+      [
+        {
+          choice: "[ 'hello', 'world' ]",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          choice: "[ 'olleh', 'dlrow' ]",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          choice: "[ 'World', 'Hello' ]",
+          created_at: new Date(),
+          updated_at: new Date(),
+        }
+      ],
+      [
+        {
+          choice: "1 [ 1 ]",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          choice: "1 []",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          choice: "0 []",
+          created_at: new Date(),
+          updated_at: new Date(),
+        }
+      ],
+      [
+        {
+          choice: "60",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          choice: "1",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          choice: "120",
+          created_at: new Date(),
+          updated_at: new Date(),
+        }
+      ],
+      [
+        {
+          choice: "We have to return a variable",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          choice: "Missing 'var', 'const' or 'let' keyword",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          choice: "Seems fine! This code would run!",
+          created_at: new Date(),
+          updated_at: new Date(),
+        }
+      ]
+    ]
+
+    for (let i = 0; i < questions.length; i += 1) {
+      const questionId = questions[i].question_id;
+
+      for (let j = 0; j < choicesSet[i].length; j += 1) {
+        choicesSet[i][j].question_id = questionId
+        
+        choices.push(choicesSet[i][j])
+      }
+
+    //   choices.push({
+    //     choice: "return recursiveStringReverse(lastChars) + firstChar; ",
+    //     question_id: question.question_id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   });
+
+    //   choices.push({
+    //     choice: "return lastChars + firstChar;",
+    //     question_id: question.question_id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   });
+
+    //   choices.push({
+    //     choice: "return firstChar + recursiveStringReverse(lastChars)",
+    //     question_id: question.question_id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    // });
     }
 
     queryInterface.bulkInsert('js_choices', choices);
@@ -66,3 +175,4 @@ module.exports = {
     await queryInterface.bulkDelete('js_questions', null, {});
   },
 };
+

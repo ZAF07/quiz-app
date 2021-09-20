@@ -31,10 +31,11 @@ function Quiz({topic, questionFromDB}) {
   const [value, setValue] = useState(null)
   const [results, setResults] = useState([])
   const alanInstance = useRef(null);
-  const scoreParaRef = useRef();
+  const timerRef = useRef();
   const correctAnswerRef = useRef()
   const trackScoreRef = useRef(0);
   const questionNum = useRef(0);
+
 
 // ABSTRACTING THE CORRECT ANSWER
   if (questionFromDB && questionNum.current < questionFromDB.questionsResults.length){
@@ -209,6 +210,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
 
   return (
     <div>
+
       { questionFromDB && questionNum.current < questionFromDB.questionsResults.length ? questionAndChoices(questionFromDB.questionsResults[questionNum.current].question_id) : noQuestion}
       
    

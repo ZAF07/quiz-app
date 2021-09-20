@@ -16,7 +16,7 @@ import Resources from './components/resources/Resources';
 
 function App() {
 
-
+console.log('((((())))) app rendered )))))');
   // alan instance
   const alanInstance = useRef(null);
   const currentPage = window.location.pathname;

@@ -10,7 +10,7 @@ module.exports = {
       },
     {
         question: 'What is the value of the variable words after the following code runs?',
-        answer: "[ 'olleH', 'dlroW' ]",
+        answer: "[ 'olleh', 'dlrow' ]",
         require_snippet: "let words = ['Hello', 'World'];\nwords.forEach((word, i) => {\n (words[i] = word.split('').reverse().join('').toLowerCase())});",
         created_at: new Date(),
         updated_at: new Date(),

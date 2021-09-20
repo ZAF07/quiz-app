@@ -1,20 +1,36 @@
 import React from 'react'
 
-function DashboardAfterQuiz({results}) {
+function DashboardAfterQuiz({results, finalScore}) {
+
+  let finalScoreCalculation;
+  if (finalScore >= 4) { 
+    finalScoreCalculation = (
+      <h2>Amazing! You're really close to hitting full marks! ⭐️</h2>
+    )
+  } else if (finalScore > 2) {
+    
+        finalScoreCalculation = (
+          <>
+            <h2>Well done, your're halfway there! Keep practicing and come back next time to try hit full score 💪</h2>
+          </>
+        )
+  }
 
   const resultList = results.map(result => (
     <>
-      <p style={{'color': result.correct ? 'green': 'red'}}>question: {result.question}</p>
-      <p style={{'color': result.correct ? 'green': 'red'}}>answer: {result.answer}</p>
-      <p style={{'color': result.correct ? 'green': 'red'}}> selected: {result.selected}</p>
+      <h2 key={result.answer} style={{'color': result.correct ? 'green': 'red'}}>question: {result.question}</h2>
+      <p key={result.question} style={{'color': 'green'}}>answer: {result.answer}</p>
+      <p key={result.selected.split('') } style={{'color': result.correct ? 'green': 'red'}}> selected: {result.selected}</p>
       <hr></hr>
     </>
   ))
 
   return (
     <div>
-        <h1>Results here! </h1>
-        {resultList}
+      {finalScoreCalculation}
+      <h1>Results here! </h1>
+      <h3>You scored {finalScore / 5 * 100}%</h3>
+      {resultList}
     </div>
   )
 }

@@ -213,20 +213,20 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
       
    
       {/* <p ref={scoreParaRef}>a</p> */}
-      {
+      {/* {
       questionFromDB
       &&
       questionNum.current >= questionFromDB.questionsResults.length
       &&
       <p>{trackScoreRef.current}</p>
-      }
+      } */}
 
       {
         questionFromDB
         &&
         questionNum.current >= questionFromDB.questionsResults.length
         &&
-        <DashboardAfterQuiz results={results} />
+        <DashboardAfterQuiz results={results} finalScore={trackScoreRef.current} />
       }
 
       {/* <div style={{marginLeft: '15%', marginRight: '15%'}}>

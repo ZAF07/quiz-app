@@ -72,7 +72,7 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          choice: "[ 'olleh', 'dlrow' ]",
+          choice: "[ 'olleH', 'dlroW' ]",
           created_at: new Date(),
           updated_at: new Date(),
         },

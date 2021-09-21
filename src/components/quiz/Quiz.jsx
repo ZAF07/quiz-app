@@ -1,10 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
+import env from 'react-dotenv';
+import { makeStyles } from '@material-ui/core/styles'
 import {
   Radio,
   FormControl,
   FormControlLabel,
   FormLabel,
-  RadioGroup
+  RadioGroup,
+  Grid,
+  Typography,
+  Chip
 } from '@material-ui/core';
 import alanBtn from '@alan-ai/alan-sdk-web';
 
@@ -20,6 +25,28 @@ import docco from 'react-syntax-highlighter/dist/esm/styles/hljs/docco';
 import DashboardAfterQuiz from '../dashboard/DashboardAfterQuiz';
 
 
+//  CUSTOM STYLES
+const useStyles = makeStyles((theme) => ({
+  container: {
+    width: '100%',
+    paddingTop: '3%',
+    paddingLeft: '5%',
+    paddingRight: '5%',
+  },
+  rocketContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  rocketAndSignIn: {
+    padding: '3%',
+  },
+
+
+
+}))
+
+
 SyntaxHighlighter.registerLanguage('javascript', js);
 
 const code = `function main(input\n {\n  return 'hello world' \n }`;
@@ -28,6 +55,8 @@ const code = `function main(input\n {\n  return 'hello world' \n }`;
 // function Quiz({topic, nextQs, questionFromDB, questionNum}) {
 function Quiz({topic, questionFromDB}) {
   console.log('QUIZ RENDERED');
+  
+  const styles = useStyles()
 
   const [value, setValue] = useState(null)
   const [results, setResults] = useState([])
@@ -36,6 +65,8 @@ function Quiz({topic, questionFromDB}) {
   const correctAnswerRef = useRef()
   const trackScoreRef = useRef(0);
   const questionNum = useRef(0);
+
+const answersRef = useRef([])
 
 
 // ABSTRACTING THE CORRECT ANSWER
@@ -55,26 +86,36 @@ function Quiz({topic, questionFromDB}) {
   //   // scoreParaRef.current.innerHTML = `${trackScoreRef.current} score at ref`
   // }
 
-
-    if (questionFromDB && questionNum >= questionFromDB.questionsResults.length){
-      alert('larger, done with quiz')
-  }
-
-
   useEffect(() => {
 
     if (!alanInstance.current) {
     
       alanInstance.current = alanBtn({
+
+        key: env.ALAN,
         onCommand:(commandData) => {
           if (commandData.speak) {
             alanBtn.activate();
             
           }
+          if (commandData.answer) {
+            handleAnswerSelected()
+          }
         }
       })
+
+      // // alanInstance.current.deactivate();
     }
   }, [])
+
+
+        
+      // if (questionFromDB && questionFromDB.questionsResults.length) {
+      //   console.log('its here');
+      //           // // AUTO ALAN
+      //     alanInstance.current.activate();
+      //     alanInstance.current.playText(questionFromDB.questionsResults[questionNum.current].question);
+      // }
 
   // console.log('from qwuix' ,question);
   console.log('***** FROM QUIZ --> ', questionFromDB);
@@ -91,9 +132,9 @@ function Quiz({topic, questionFromDB}) {
 // };
 
 const optionsLetter = ['A', 'B', 'C', 'D'];
-  let selected;
+  let selection;
   if (questionFromDB && questionFromDB.choicesResults.length) {  
-     selected = questionFromDB.choicesResults.map((a, i) => (
+     selection = questionFromDB.choicesResults.map((a, i) => (
        <>
        <option key={i} value={a[i]}>{optionsLetter[i]}</option>
      </>
@@ -111,7 +152,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
     if (need) {
       return (
         <div style={{marginLeft: '15%', marginRight: '15%'}}>
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language="javascript" style={dark}>
           {need}
           </SyntaxHighlighter>
         </div>
@@ -131,13 +172,26 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
       choicesList.push({choice: questionFromDB.questionsResults[questionNum.current].answer})
       console.log('choicesList -> ', choicesList);
     
+
       // MAPPING CURRENT CHOICES INTO RADIO BUTTONS
       let currentOptions
-      currentOptions = choicesList.map((qs, key) => (
-        <>
-           <FormControlLabel key={qs} value={qs.choice} control={<Radio />} label={qs.choice} />
-        </>
-    )) 
+    //   currentOptions = choicesList.map((qs, key) => (
+    //     <>
+    //        <FormControlLabel key={qs} value={qs.choice} control={<Radio />} label={qs.choice} />
+    //     </>
+    // )) 
+        currentOptions = choicesList.map((qs, key) => {
+          answersRef.current.push(qs)
+          return (
+              <>
+                <small>{optionsLetter[key]}</small>
+                <FormControlLabel key={qs} value={qs.choice} control={<Radio />} label={qs.choice}
+                className='selected-choice-from-alan'
+                />
+              </>
+          )
+
+        })
 
     console.log('thisis vchia --<> ', choicesList);
     return (
@@ -159,7 +213,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
           </FormControl>
       
       <select>
-      {selected}
+      {selection}
       </select>
       <button onClick={handleAnswerSelected}>Next</button>
       <hr/>
@@ -169,6 +223,11 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
     )
   }
 
+  const handleAlan = (index) => {
+    const answer = correctAnswerRef.current;
+    const userAnswer = answersRef.current[index]
+  }
+
   // HANDLE FUNCTION FOR RADIO BUTTON
   const handleChange = (e) => {
     console.log('haha');
@@ -176,7 +235,10 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
   }
 
   // IF USER SELECTS CORRECT ANSWER, ADD 1 TO SCORE AND INCREMENT CURRENT QUESTION REF
-  const handleAnswerSelected = () => {
+  const handleAnswerSelected =  () => {
+
+    console.log('hehehe -> ', answersRef.current);
+    answersRef.current = []
 
     console.log('checking answer --> ', correctAnswerRef.current === value);
     
@@ -212,8 +274,16 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
   return (
     <div>
 
+              <Grid container columns={12}  className={styles.rocketContainer}>
+          <Grid item className={styles.rocketAndSignIn}>
+          <Typography variant='h1'>🚀</Typography>
+          </Grid>
+          <Grid item className={styles.rocketAndSignIn}>
+            <Chip label='Sign In' variant='outlined' onClick={() => alert('Signed In')}/>
+          </Grid>
+        </Grid>
+
       { questionFromDB && questionNum.current < questionFromDB.questionsResults.length ? questionAndChoices(questionFromDB.questionsResults[questionNum.current].question_id) : noQuestion}
-      
    
       {/* <p ref={scoreParaRef}>a</p> */}
       {/* {

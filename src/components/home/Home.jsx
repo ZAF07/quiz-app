@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import { 
   Grid,
   Chip,
-  AppBar,
   Card,
   CardContent,
   CardActions,
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   '&:hover': {
     position: 'relative',
     transform: 'scale(1.1)',
-    transition: '.6s',
+    transition: '.1s',
     },
     transition: '.6s',
   },
@@ -65,7 +64,7 @@ function Home(props) {
           <Typography variant="h2">Let's start to learn !</Typography>
         </Grid>
 
-        <Grid container lg={12} className={styles.container} spacing={5}>
+        <Grid container className={styles.container} spacing={5}>
 
           <Grid item>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>

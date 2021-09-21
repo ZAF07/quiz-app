@@ -26,7 +26,6 @@ console.log('((((())))) app rendered )))))');
   const [question, setQuestion] = useState(null)
   // SEND QUESTIONS, ANSWER AND OPTIONS
   let [qnsNumber, SetQnsNumber] = useState(0);
-  const [signed, setSign] = useState(false);
 
 
   useEffect(() => {
@@ -41,17 +40,17 @@ console.log('((((())))) app rendered )))))');
           //   handleNextQs();
           // }
   
-          if (commandData.answer) {
+          // if (commandData.answer) {
   
-            /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
-             also use this data to instantly check if answer selected is correct and react accordingly
-             vvvvvvvvvvvvvvvv
-             */
+          //   /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
+          //    also use this data to instantly check if answer selected is correct and react accordingly
+          //    vvvvvvvvvvvvvvvv
+          //    */
   
-            // alert('User selected : ', commandData.answer);
-            console.log('ANSWERED 434344');
-            handleNextQs();
-          }
+          //   // alert('User selected : ', commandData.answer);
+          //   console.log('ANSWERED 434344');
+          //   handleNextQs();
+          // }
   
           // auto play alan
           if (commandData.startQ) {
@@ -77,7 +76,6 @@ console.log('((((())))) app rendered )))))');
       console.log(' RECEIVED FROM DB *** -> ', data);
     })
     setQuizSelected(true);
-    setSign(true)
     setTopic(topic)
   }
 

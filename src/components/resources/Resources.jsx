@@ -18,16 +18,16 @@ function Resources() {
             // handleNextQs();
           }
   
-          if (commandData.answer) {
+          // if (commandData.answer) {
   
-            /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
-             also use this data to instantly check if answer selected is correct and react accordingly
-             vvvvvvvvvvvvvvvv
-             */
+          //   /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
+          //    also use this data to instantly check if answer selected is correct and react accordingly
+          //    vvvvvvvvvvvvvvvv
+          //    */
   
-            alert('User selected : ', commandData.answer);
-            // handleNextQs();
-          }
+          //   alert('User selected : ', commandData.answer);
+          //   // handleNextQs();
+          // }
   
           // auto play alan
           if (commandData.command === 'auto') {

@@ -2,7 +2,6 @@ import React, {useRef, useEffect} from 'react';
 import alanBtn from "@alan-ai/alan-sdk-web";
 function Resources() {
 
-
     // alan instance
   const alanInstance = useRef(null);
   const currentPage = window.location.pathname
@@ -36,13 +35,14 @@ function Resources() {
           }
         }
       })
+      // AUTO ALAN
+      alanInstance.current.activate();
+      alanInstance.current.playText(`Hello there! This is the resources page`);
+      // alanInstance.current.deactivate();
     }
-    // AUTO ALAN
-    // alanInstance.current.activate();
-    // alanInstance.current.playText(`Hello ${name}! Welcome to the quiz. What topic would you like to practice today?`);
-    // alanInstance.current.deactivate();
   }, [])
 
+  console.log('alan -> ', alanInstance);
 
   return (
     <div>

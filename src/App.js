@@ -59,11 +59,11 @@ console.log('((((())))) app rendered )))))');
           }
         }
       })
+      // // AUTO ALAN
+      // alanInstance.current.activate();
+      // alanInstance.current.playText(`Hello effy! Welcome to the quiz. What topic would you like to practice today?`);
+      // // alanInstance.current.deactivate();
     }
-    // AUTO ALAN
-    // alanInstance.current.activate();
-    // alanInstance.current.playText(`Hello effy! Welcome to the quiz. What topic would you like to practice today?`);
-    // alanInstance.current.deactivate();
   }, [])
 
 
@@ -88,7 +88,7 @@ console.log('((((())))) app rendered )))))');
   return (
     <Router>
       <div className="App">
-          <h1 style={{color: !signed ? 'red' : 'green'}}>🚀 Quiz App</h1>
+          {/* <h1 style={{color: !signed ? 'red' : 'green'}}>🚀 Quiz App</h1> */}
     
           {
             !quizSelected &&

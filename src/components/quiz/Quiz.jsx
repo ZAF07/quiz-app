@@ -14,6 +14,7 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
 import py from 'react-syntax-highlighter/dist/esm/languages/hljs/python';
+import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql';
 import docco from 'react-syntax-highlighter/dist/esm/styles/hljs/docco';
 
 import DashboardAfterQuiz from '../dashboard/DashboardAfterQuiz';

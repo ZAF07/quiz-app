@@ -31,11 +31,13 @@ const useStyles = makeStyles((theme) => ({
   },
   hov: {
   '&:hover': {
+    position: 'relative',
     transform: 'scale(1.1)',
-    transition: '.6s'
+    transition: '.6s',
     },
-    transition: '.6s'
-  }
+    transition: '.6s',
+  },
+
 
 }))
 
@@ -84,11 +86,13 @@ function Home(props) {
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
                 <Typography variant='h6'>
-                  Explain Quiz Here
+                  Backend
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button onClick={() => enterQuiz('javascript')}>Launch Javascript</Button>
+                  <Button variant='outlined' onClick={() => enterQuiz('backend')}>
+                  <Typography variant='caption'>Launch Backend</Typography>
+                </Button>
               </CardActions>
             </Card>
           </Grid>

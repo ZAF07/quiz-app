@@ -9,7 +9,7 @@ const javascriptQnA = async (req, res) => {
   const choicesResults = [] 
   const questionsResults = [] 
 
-  const questions = await db.Question.findAll({
+  const questions = await db.JsQuestion.findAll({
     attributes: ['question','answer', 'require_snippet', 'question_id'],
   });
 
@@ -18,7 +18,7 @@ const javascriptQnA = async (req, res) => {
     questionsResults.push(dataValues); 
   }
 
-  const choices = await db.Choice.findAll({
+  const choices = await db.JsChoice.findAll({
   
     attributes: ['choice', 'question_id'],
   });

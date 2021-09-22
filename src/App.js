@@ -28,42 +28,42 @@ console.log('((((())))) app rendered )))))');
   let [qnsNumber, SetQnsNumber] = useState(0);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (!alanInstance.current && currentPage === '/') {
+  //   if (!alanInstance.current && currentPage === '/') {
 
-      alanInstance.current =  alanBtn({
-        key: env.ALAN,
-        onCommand: (commandData) => {
+  //     alanInstance.current =  alanBtn({
+  //       key: env.ALAN,
+  //       onCommand: (commandData) => {
   
-          // if (commandData.command === 'yes') {
-          //   handleNextQs();
-          // }
+  //         // if (commandData.command === 'yes') {
+  //         //   handleNextQs();
+  //         // }
   
-          // if (commandData.answer) {
+  //         // if (commandData.answer) {
   
-          //   /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
-          //    also use this data to instantly check if answer selected is correct and react accordingly
-          //    vvvvvvvvvvvvvvvv
-          //    */
+  //         //   /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
+  //         //    also use this data to instantly check if answer selected is correct and react accordingly
+  //         //    vvvvvvvvvvvvvvvv
+  //         //    */
   
-          //   // alert('User selected : ', commandData.answer);
-          //   console.log('ANSWERED 434344');
-          //   handleNextQs();
-          // }
+  //         //   // alert('User selected : ', commandData.answer);
+  //         //   console.log('ANSWERED 434344');
+  //         //   handleNextQs();
+  //         // }
   
-          // auto play alan
-          if (commandData.startQ) {
-            handleStart(commandData.startQ)
-          }
-        }
-      })
-      // // AUTO ALAN
-      // alanInstance.current.activate();
-      // alanInstance.current.playText(`Hello effy! Welcome to the quiz. What topic would you like to practice today?`);
-      // // alanInstance.current.deactivate();
-    }
-  }, [])
+  //         // auto play alan
+  //         if (commandData.startQ) {
+  //           handleStart(commandData.startQ)
+  //         }
+  //       }
+  //     })
+  //     // // AUTO ALAN
+  //     // alanInstance.current.activate();
+  //     // alanInstance.current.playText(`Hello effy! Welcome to the quiz. What topic would you like to practice today?`);
+  //     // // alanInstance.current.deactivate();
+  //   }
+  // }, [])
 
 
 
@@ -95,6 +95,7 @@ console.log('((((())))) app rendered )))))');
           }
           {
             quizSelected &&
+            question &&
             currentPage === '/' &&
             <Quiz topic={topic} questionFromDB={question} questionNum={qnsNumber} nextQs={handleNextQs}/>
           }

@@ -55,23 +55,26 @@ const code = `function main(input\n {\n  return 'hello world' \n }`;
 // function Quiz({topic, nextQs, questionFromDB, questionNum}) {
 function Quiz({topic, questionFromDB}) {
   console.log('QUIZ RENDERED');
-  
+
   const styles = useStyles()
 
   const [value, setValue] = useState(null)
   const [results, setResults] = useState([])
   const alanInstance = useRef(null);
-  const timerRef = useRef();
   const correctAnswerRef = useRef()
   const trackScoreRef = useRef(0);
-  const questionNum = useRef(0);
+  // const questionNum = useRef(0);
+  let [questionNum, setQuestionNum] = useState(0);
 
-const answersRef = useRef([])
+  const valueRef = useRef()
+  const resultRef = useRef([])
+
+const answersRef = useRef()
 
 
 // ABSTRACTING THE CORRECT ANSWER
-  if (questionFromDB && questionNum.current < questionFromDB.questionsResults.length){
-    correctAnswerRef.current = questionFromDB.questionsResults[questionNum.current].answer;
+  if (questionFromDB && questionNum < questionFromDB.questionsResults.length){
+    correctAnswerRef.current = questionFromDB.questionsResults[questionNum].answer;
     // scoreParaRef.current.innerHTML = correctAnswerRef.current;
   }
 
@@ -94,13 +97,61 @@ const answersRef = useRef([])
 
         key: env.ALAN,
         onCommand:(commandData) => {
-          if (commandData.speak) {
-            alanBtn.activate();
+          // if (commandData.speak) {
+          //   alanBtn.activate();
             
-          }
+          // }
           if (commandData.answer) {
-            handleAnswerSelected()
+            // handleAnswerSelected()
+            console.log('ALAN SAYS ', commandData.answer);
+            const userSelect = commandData.answer
+            const index = Number(userSelect)
+            // handleAlan(index)
+            const userAnswer = answersRef.current[index].choice
+            handleAnswerSelected(userAnswer)
           }
+
+          if (commandData.readingQuestion) {
+            alanInstance.current.activate()
+            alanInstance.current.playText(questionFromDB.questionsResults[questionNum].question)
+          }
+
+          if (commandData.readChoices) {
+
+            //  CONSTRUCT THE CHOICES FOR ALAN TO READ
+            const toReadChoices = []
+            const letter = ['ayy', 'b', 'see', 'd']
+               answersRef.current.forEach((choice, i) => {
+                toReadChoices.push(`${letter[i]}: ${choice.choice}`)
+              })
+
+            alanInstance.current.activate()
+            let count = 0;
+            while (count < toReadChoices.length) {
+              alanInstance.current.playText(toReadChoices[count])
+              count += 1
+            }
+          }
+
+          // READ SPECIFIC CHOICE
+          if (commandData.readA) {
+            alanInstance.current.activate()
+            alanInstance.current.playText(`Ayy is ${answersRef.current[0].choice}`)
+          }
+          if (commandData.readB) {
+            alanInstance.current.activate()
+            alanInstance.current.playText(`b is ${answersRef.current[1].choice}`)
+          }
+          if (commandData.readC) {
+            alanInstance.current.activate()
+            alanInstance.current.playText(`see is ${answersRef.current[2].choice}`)
+          }
+          if (commandData.readD) {
+            alanInstance.current.activate()
+            alanInstance.current.playText(`d is ${answersRef.current[3].choice}`)
+          }
+
+
         }
       })
 
@@ -108,13 +159,19 @@ const answersRef = useRef([])
     }
   }, [])
 
+          //   if (questionFromDB && questionNum < questionFromDB.questionsResults.length && alanInstance.current) {
+          //   console.log('QUESTON HERE ALANNNNN');
+          //   // alanInstance.current.activate()
+          //   alanInstance.current.playText(questionFromDB.questionsResults[questionNum].question)
+          // }
+
 
         
       // if (questionFromDB && questionFromDB.questionsResults.length) {
       //   console.log('its here');
       //           // // AUTO ALAN
       //     alanInstance.current.activate();
-      //     alanInstance.current.playText(questionFromDB.questionsResults[questionNum.current].question);
+      //     alanInstance.current.playText(questionFromDB.questionsResults[questionNum].question);
       // }
 
   // console.log('from qwuix' ,question);
@@ -169,9 +226,12 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
     const choicesList = questionFromDB.choicesResults.filter((choice) => choice.question_id === id);
     
     // ADD ANSWER TO THE CHOICES LIST
-      choicesList.push({choice: questionFromDB.questionsResults[questionNum.current].answer})
+      choicesList.push({choice: questionFromDB.questionsResults[questionNum].answer})
       console.log('choicesList -> ', choicesList);
     
+
+        answersRef.current = choicesList
+     
 
       // MAPPING CURRENT CHOICES INTO RADIO BUTTONS
       let currentOptions
@@ -180,8 +240,9 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
     //        <FormControlLabel key={qs} value={qs.choice} control={<Radio />} label={qs.choice} />
     //     </>
     // )) 
+      
         currentOptions = choicesList.map((qs, key) => {
-          answersRef.current.push(qs)
+          // answersRef.current.push(qs)
           return (
               <>
                 <small>{optionsLetter[key]}</small>
@@ -192,14 +253,22 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
           )
 
         })
+        
+        const currentQuestion = questionFromDB.questionsResults[questionNum].question 
+        // if question, Alan to read
+        // if (currentQuestion) {
+        //   alanInstance.current.activate();
+        //   alanInstance.current.playText(currentQuestion)
+        // }
 
-    console.log('thisis vchia --<> ', choicesList);
+        console.log('thisis vchia --<> ', choicesList);
     return (
       <>
-      <small>{questionFromDB.questionsResults[questionNum.current].answer}</small>
+      <small>{questionFromDB.questionsResults[questionNum].answer}</small>
       <h1>{topic}</h1> 
-      <h3>{questionFromDB.questionsResults[questionNum.current].question} 🧐</h3>
-      {codeSnippet(code, questionFromDB.questionsResults[questionNum.current].require_snippet)}
+      {/* <h3>{questionFromDB.questionsResults[questionNum].question} 🧐</h3> */}
+      <h3>{currentQuestion}</h3>
+      {codeSnippet(code, questionFromDB.questionsResults[questionNum].require_snippet)}
 
           <FormControl component="fieldset">
             <FormLabel component="legend">Answers:</FormLabel>
@@ -215,7 +284,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
       <select>
       {selection}
       </select>
-      <button onClick={handleAnswerSelected}>Next</button>
+      <button onClick={() => handleAnswerSelected()}>Next</button>
       <hr/>
       {/* <h1>require snippet: {questionFromDB.questionsResults[0].require_snippet}</h1>
       <h1>question id: {questionFromDB.questionsResults[0].question_id}</h1> */}
@@ -224,50 +293,98 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
   }
 
   const handleAlan = (index) => {
+    // alert('haha')
+    const i = Number(index);
     const answer = correctAnswerRef.current;
-    const userAnswer = answersRef.current[index]
-  }
-
-  // HANDLE FUNCTION FOR RADIO BUTTON
-  const handleChange = (e) => {
-    console.log('haha');
-    setValue(e.target.value);
-  }
-
-  // IF USER SELECTS CORRECT ANSWER, ADD 1 TO SCORE AND INCREMENT CURRENT QUESTION REF
-  const handleAnswerSelected =  () => {
-
-    console.log('hehehe -> ', answersRef.current);
-    answersRef.current = []
-
-    console.log('checking answer --> ', correctAnswerRef.current === value);
-    
-    if (correctAnswerRef.current === value) {
+    const userAnswer = answersRef.current[i].choice
+    console.log('USER ANSWER ALAN -> ', userAnswer);
+    console.log('CORRECT ANSWER ALAN -> ', answer === userAnswer);
+        if (correctAnswerRef.current === userAnswer) {
       trackScoreRef.current ++;
       console.log('correct -> ', trackScoreRef.current);
       // CREATE RESULT OBJECT
       setResults((prev => {
         const result = {
-          question: questionFromDB.questionsResults[questionNum.current].question,
-          answer: questionFromDB.questionsResults[questionNum.current].answer,
-          selected: value,
+          question: questionFromDB.questionsResults[questionNum].question,
+          answer: questionFromDB.questionsResults[questionNum].answer,
+          selected: userAnswer,
           correct: true
         }
         return [...prev, result]
       }))
+
+        // const result = {
+        //   question: questionFromDB.questionsResults[questionNum.current].question,
+        //   answer: questionFromDB.questionsResults[questionNum.current].answer,
+        //   selected: value,
+        //   correct: true
+        // }
+      // resultRef.current = [...resultRef.current, result]
+
     } else {
-      console.log(questionNum.current);
+      console.log(questionNum);
       setResults((prev => {
         const result = {
-          question: questionFromDB.questionsResults[questionNum.current].question,
-          answer: questionFromDB.questionsResults[questionNum.current].answer,
-          selected: value,
+          question: questionFromDB.questionsResults[questionNum].question,
+          answer: questionFromDB.questionsResults[questionNum].answer,
+          selected: userAnswer,
           correct: false,
         }
         return [...prev, result];
       }))
     }
-    questionNum.current ++;
+    // questionNum.current ++;
+    setQuestionNum( questionNum ++)
+  }
+
+  // HANDLE FUNCTION FOR RADIO BUTTON
+  const handleChange = (e) => {
+    console.log('value/valueRef changed in the handleChange function (RadioGroup');
+    setValue(e.target.value);
+    // valueRef.current = e.target.value
+  }
+
+  // IF USER SELECTS CORRECT ANSWER, ADD 1 TO SCORE AND INCREMENT CURRENT QUESTION REF
+  const handleAnswerSelected =  (userSelecteds) => {
+    answersRef.current = []
+
+    const userChoice = userSelecteds ? userSelecteds : value;
+    console.log('@@@ userChoice -> ', userChoice);
+
+    console.log('answeres ref in handleSelected -> ', answersRef.current);
+
+    console.log('checking answer --> ', correctAnswerRef.current === value);
+    
+    if (correctAnswerRef.current === userChoice) {
+      trackScoreRef.current ++;
+      console.log('correct -> ', trackScoreRef.current);
+      // CREATE RESULT OBJECT
+      setResults((prev => {
+        const result = {
+          question: questionFromDB.questionsResults[questionNum].question,
+          answer: questionFromDB.questionsResults[questionNum].answer,
+          selected: userChoice,
+          correct: true
+        }
+        return [...prev, result]
+      }))
+      // questionNum.current +
+    setQuestionNum( questionNum += 1)
+
+    } else {
+      console.log(questionNum);
+      setResults((prev => {
+        const result = {
+          question: questionFromDB.questionsResults[questionNum].question,
+          answer: questionFromDB.questionsResults[questionNum].answer,
+          selected: userChoice,
+          correct: false,
+        }
+        return [...prev, result];
+      }))
+      // questionNum.current ++;
+    setQuestionNum( questionNum += 1)
+    }
 
   }
 
@@ -283,7 +400,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
           </Grid>
         </Grid>
 
-      { questionFromDB && questionNum.current < questionFromDB.questionsResults.length ? questionAndChoices(questionFromDB.questionsResults[questionNum.current].question_id) : noQuestion}
+      { questionFromDB && questionNum < questionFromDB.questionsResults.length ? questionAndChoices(questionFromDB.questionsResults[questionNum].question_id) : noQuestion}
    
       {/* <p ref={scoreParaRef}>a</p> */}
       {/* {
@@ -297,9 +414,10 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
       {
         questionFromDB
         &&
-        questionNum.current >= questionFromDB.questionsResults.length
+        questionNum >= questionFromDB.questionsResults.length
         &&
         <DashboardAfterQuiz results={results} finalScore={trackScoreRef.current} />
+        // <DashboardAfterQuiz results={resultRef.current} finalScore={trackScoreRef.current} />
       }
 
       {/* <div style={{marginLeft: '15%', marginRight: '15%'}}>

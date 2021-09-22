@@ -11,7 +11,10 @@ import StateProvider from './store/store';
 const theme = createTheme({
   palette: {
     secondary: {
-      main: '#424242'
+      main: '#424242',
+    },
+    primary: {
+      main: '#fff',
     },
 
     type: 'dark',

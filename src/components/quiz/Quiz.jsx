@@ -10,7 +10,8 @@ import {
   Grid,
   Typography,
   Chip,
-  Avatar
+  Avatar,
+  Button,
 } from '@material-ui/core';
 import alanBtn from '@alan-ai/alan-sdk-web';
 
@@ -46,6 +47,13 @@ const useStyles = makeStyles((theme) => ({
   rocketAndSignIn: {
     padding: '3%',
   },
+  quizContainer: {
+    paddingTop: '2%',
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    display: 'flex',
+    justifyContent: 'center'
+  }
 
 
 
@@ -236,6 +244,22 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
   }
 
 
+        let topicLogo;
+        switch (topic) {
+          case 'javascript':
+            topicLogo = javascript
+            break;
+          case 'serverside':
+            topicLogo = serverside
+            break
+          case 'sql':
+            topicLogo = sql  
+            break
+          default:
+            topicLogo = javascript
+            break;
+        }
+
   // DISPLAYING THE CURRENT QUESTION AND CHOICES
   const questionAndChoices = (id) => {
 
@@ -271,21 +295,6 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
 
         })
 
-        let topicLogo;
-        switch (topic) {
-          case 'javascript':
-            topicLogo = javascript
-            break;
-          case 'serverside':
-            topicLogo = serverside
-            break
-          case 'sql':
-            topicLogo = sql  
-            break
-          default:
-            topicLogo = javascript
-            break;
-        }
      
 
         const currentQuestion = questionFromDB.questionsResults[questionNum].question 
@@ -298,12 +307,13 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
         console.log('thisis vchia --<> ', choicesList);
     return (
       <>
-      <h3><span><Avatar alt='logo' src={topicLogo} /></span>{currentQuestion}</h3>
+      <h3>{currentQuestion}</h3>
       {codeSnippet(code, questionFromDB.questionsResults[questionNum].require_snippet)}
 
           <FormControl component="fieldset">
-            <FormLabel component="legend">Answers:</FormLabel>
+            <FormLabel color='primary' component="legend">Answers:</FormLabel>
             <RadioGroup
+            color='primary'
               value={value}
               name="radio-buttons-group"
               onChange={handleChange}
@@ -312,10 +322,13 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
             </RadioGroup>
           </FormControl>
       
-      <select>
+      {/* <select>
       {selection}
-      </select>
-      <button onClick={() => handleAnswerSelected()}>Next</button>
+      </select> */}
+      <Grid item sm={12} md={6} lg={4}>
+      <Button variant='contained' color='secondary' onClick={() => handleAnswerSelected()}>Next</Button>
+
+      </Grid>
       <hr/>
       {/* <h1>require snippet: {questionFromDB.questionsResults[0].require_snippet}</h1>
       <h1>question id: {questionFromDB.questionsResults[0].question_id}</h1> */}
@@ -422,16 +435,30 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
   return (
     <div>
 
-              <Grid container columns={12}  className={styles.rocketContainer}>
+          <Grid container columns={12}  className={styles.rocketContainer}>
           <Grid item className={styles.rocketAndSignIn}>
-          <Typography variant='h1'>🚀</Typography>
+          {/* <Typography variant='h3'>🚀</Typography> */}
+          <Avatar alt='logo' src={topicLogo} />
           </Grid>
-          <Grid item className={styles.rocketAndSignIn}>
+          {/* <Grid item className={styles.rocketAndSignIn}>
             <Chip label='Sign In' variant='outlined' onClick={() => alert('Signed In')}/>
-          </Grid>
+          </Grid> */}
         </Grid>
+    
+    <Grid container direction='column' className={styles.quizContainer}>
 
       { questionFromDB && questionNum < questionFromDB.questionsResults.length ? questionAndChoices(questionFromDB.questionsResults[questionNum].question_id) : noQuestion}
+
+            {
+        questionFromDB
+        &&
+        questionNum >= questionFromDB.questionsResults.length
+        &&
+        <DashboardAfterQuiz results={results} finalScore={trackScoreRef.current} />
+        // <DashboardAfterQuiz results={resultRef.current} finalScore={trackScoreRef.current} />
+      }
+    </Grid>
+
    
       {/* <p ref={scoreParaRef}>a</p> */}
       {/* {
@@ -442,21 +469,13 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
       <p>{trackScoreRef.current}</p>
       } */}
 
-      {
-        questionFromDB
-        &&
-        questionNum >= questionFromDB.questionsResults.length
-        &&
-        <DashboardAfterQuiz results={results} finalScore={trackScoreRef.current} />
-        // <DashboardAfterQuiz results={resultRef.current} finalScore={trackScoreRef.current} />
-      }
+
 
       {/* <div style={{marginLeft: '15%', marginRight: '15%'}}>
         <SyntaxHighlighter language="javascript" style={docco}>
         {code}
         </SyntaxHighlighter>
       </div> */}
-      Quiz Component
     </div>
   )
 }

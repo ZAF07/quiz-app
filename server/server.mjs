@@ -37,7 +37,7 @@ app.get('/api/javascript', async (req, res) => {
   res.json({choicesResults, questionsResults});
 })
 
-app.get('/api/backend', async (req, res) => {
+app.get('/api/serverside', async (req, res) => {
 
   const choicesResults = [] 
   const questionsResults = [] 

@@ -1,7 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 
+
+import jsImg from '../../images/javascript.png';
+import bckEnd from '../../images/serverside.png';
+import sqlImg from '../../images/sql.png';
+
 import { 
+  Avatar,
   Grid,
   Chip,
   Card,
@@ -69,13 +75,15 @@ function Home(props) {
           <Grid item>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
+                <Avatar alt='js' src={jsImg} />
                 <Typography variant='h6'>
                   Basics
                 </Typography>
+                <Typography variant='caption'>Train fundamentals with javascript</Typography>
               </CardContent>
               <CardActions>
                 <Button variant='outlined' onClick={() => enterQuiz('javascript')}>
-                  <Typography variant='caption'>Launch Javascript</Typography>
+                  <Typography variant='caption'>Launch Javascript Quiz</Typography>
                 </Button>
               </CardActions>
             </Card>
@@ -84,13 +92,15 @@ function Home(props) {
           <Grid item>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
+                <Avatar alt='bckend' src={bckEnd} />
                 <Typography variant='h6'>
-                  Backend
+                  Serverside
                 </Typography>
+                <Typography variant='caption'>Train your skills in Serverside programming</Typography>
               </CardContent>
               <CardActions>
-                  <Button variant='outlined' onClick={() => enterQuiz('backend')}>
-                  <Typography variant='caption'>Launch Backend</Typography>
+                  <Button variant='outlined' onClick={() => enterQuiz('serverside')}>
+                  <Typography variant='caption'>Launch Serverside Quiz</Typography>
                 </Button>
               </CardActions>
             </Card>
@@ -99,12 +109,16 @@ function Home(props) {
           <Grid item>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
+                <Avatar alt='bckend' src={sqlImg} />
                 <Typography variant='h6'>
-                  Explain Quiz Here
+                  SQL
                 </Typography>
+                <Typography variant='caption'>Train your skills in SQL</Typography>
               </CardContent>
               <CardActions>
-                <Button onClick={() => enterQuiz('javascript')}>Launch Javascript</Button>
+                <Button variant='outlined' onClick={() => enterQuiz('serverside')}>
+                  <Typography variant='caption'>Launch SQL Quiz</Typography>
+                </Button>
               </CardActions>
             </Card>
           </Grid>

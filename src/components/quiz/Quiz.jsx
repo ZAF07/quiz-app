@@ -9,7 +9,8 @@ import {
   RadioGroup,
   Grid,
   Typography,
-  Chip
+  Chip,
+  Avatar
 } from '@material-ui/core';
 import alanBtn from '@alan-ai/alan-sdk-web';
 
@@ -21,6 +22,10 @@ import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
 import py from 'react-syntax-highlighter/dist/esm/languages/hljs/python';
 import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql';
 import docco from 'react-syntax-highlighter/dist/esm/styles/hljs/docco';
+
+import javascript from '../../images/javascript.png';
+import serverside from '../../images/serverside.png';
+import sqlImg from '../../images/sql.png';
 
 import DashboardAfterQuiz from '../dashboard/DashboardAfterQuiz';
 
@@ -53,7 +58,7 @@ const code = `function main(input\n {\n  return 'hello world' \n }`;
 
 // COMPONENT
 // function Quiz({topic, nextQs, questionFromDB, questionNum}) {
-function Quiz({topic, questionFromDB}) {
+function Quiz({topic, questionFromDB, alan}) {
   console.log('QUIZ RENDERED');
 
   const styles = useStyles()
@@ -89,8 +94,10 @@ const answersRef = useRef()
   //   // scoreParaRef.current.innerHTML = `${trackScoreRef.current} score at ref`
   // }
 
-  useEffect(() => {
+   useEffect(() => {
+     console.log('ALAN AVBJUVUJBV --> ', alan);
 
+ 
     if (!alanInstance.current) {
     
       alanInstance.current = alanBtn({
@@ -151,13 +158,23 @@ const answersRef = useRef()
             alanInstance.current.playText(`d is ${answersRef.current[3].choice}`)
           }
 
+          //  AFTER QUIZ, RETURN HOME COMMAND
+          if (commandData.backHome) {
+            setTimeout(window.location.reload(), 5000)
+            // window.location.reload();
+          }
 
         }
       })
 
       // // alanInstance.current.deactivate();
     }
-  }, [])
+   }, [])
+
+             if (questionFromDB && questionNum >= questionFromDB.questionsResults.length) {
+            alanInstance.current.activate()
+            alanInstance.current.playText('Nice work! You\'ve completed the quiz. Check out how you did!')
+          }
 
           //   if (questionFromDB && questionNum < questionFromDB.questionsResults.length && alanInstance.current) {
           //   console.log('QUESTON HERE ALANNNNN');
@@ -253,7 +270,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
           )
 
         })
-        
+       const a = javascript
         const currentQuestion = questionFromDB.questionsResults[questionNum].question 
         // if question, Alan to read
         // if (currentQuestion) {
@@ -266,6 +283,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
       <>
       <small>{questionFromDB.questionsResults[questionNum].answer}</small>
       <h1>{topic}</h1> 
+      <Avatar alt='logo' src={a} />
       {/* <h3>{questionFromDB.questionsResults[questionNum].question} 🧐</h3> */}
       <h3>{currentQuestion}</h3>
       {codeSnippet(code, questionFromDB.questionsResults[questionNum].require_snippet)}

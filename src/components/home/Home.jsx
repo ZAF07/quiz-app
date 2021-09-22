@@ -72,7 +72,7 @@ function Home(props) {
 
         <Grid container className={styles.container} spacing={5}>
 
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
                 <Avatar alt='js' src={jsImg} />
@@ -89,7 +89,7 @@ function Home(props) {
             </Card>
           </Grid>
           
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
                 <Avatar alt='bckend' src={bckEnd} />
@@ -106,7 +106,7 @@ function Home(props) {
             </Card>
           </Grid>
 
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
                 <Avatar alt='bckend' src={sqlImg} />
@@ -122,7 +122,7 @@ function Home(props) {
               </CardActions>
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
                 <Typography variant='h6'>
@@ -134,7 +134,7 @@ function Home(props) {
               </CardActions>
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
                 <Typography variant='h6'>

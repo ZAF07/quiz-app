@@ -21,7 +21,7 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
 import py from 'react-syntax-highlighter/dist/esm/languages/hljs/python';
 import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql';
-import docco from 'react-syntax-highlighter/dist/esm/styles/hljs/docco';
+import {atelierCaveDark} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import javascript from '../../images/javascript.png';
 import serverside from '../../images/serverside.png';
@@ -226,7 +226,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
     if (need) {
       return (
         <div style={{marginLeft: '15%', marginRight: '15%'}}>
-          <SyntaxHighlighter language="javascript" style={dark}>
+          <SyntaxHighlighter language="javascript" style={atelierCaveDark}>
           {need}
           </SyntaxHighlighter>
         </div>
@@ -270,7 +270,24 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
           )
 
         })
-       const a = javascript
+
+        let topicLogo;
+        switch (topic) {
+          case 'javascript':
+            topicLogo = javascript
+            break;
+          case 'serverside':
+            topicLogo = serverside
+            break
+          case 'sql':
+            topicLogo = sql  
+            break
+          default:
+            topicLogo = javascript
+            break;
+        }
+     
+
         const currentQuestion = questionFromDB.questionsResults[questionNum].question 
         // if question, Alan to read
         // if (currentQuestion) {
@@ -281,11 +298,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
         console.log('thisis vchia --<> ', choicesList);
     return (
       <>
-      <small>{questionFromDB.questionsResults[questionNum].answer}</small>
-      <h1>{topic}</h1> 
-      <Avatar alt='logo' src={a} />
-      {/* <h3>{questionFromDB.questionsResults[questionNum].question} 🧐</h3> */}
-      <h3>{currentQuestion}</h3>
+      <h3><span><Avatar alt='logo' src={topicLogo} /></span>{currentQuestion}</h3>
       {codeSnippet(code, questionFromDB.questionsResults[questionNum].require_snippet)}
 
           <FormControl component="fieldset">

@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
     },
     transition: '.6s',
   },
+  anchorTag: {
+    color: '#fff',
+    textDecoration: 'none'
+  }
 
 
 }))
@@ -140,6 +144,7 @@ function Home(props) {
               </CardActions>
             </Card>
           </Grid>
+
           <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
@@ -152,6 +157,28 @@ function Home(props) {
               <CardActions>
                 <Button variant='outlined' onClick={() => enterQuiz('serverside')}>
                   <Typography variant='caption'>Launch React Quiz</Typography>
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card sx={{minWidth: 275}} raised className={styles.hov}>
+              <CardContent>
+                <Avatar>🚀</Avatar>
+                <Typography variant='h6'>
+                  Rocket Academy
+                </Typography>
+                <Typography variant='caption'>Level up and join Rocket Academy today!</Typography>
+              </CardContent>
+              <CardActions>
+                <Button variant='outlined'>
+                  <Typography variant='caption'>
+                    <a href='https://rocketacademy.co'
+                    className={styles.anchorTag}
+                    target='blank'>
+                      Launch Rocket ship
+                    </a>
+                  </Typography>
                 </Button>
               </CardActions>
             </Card>

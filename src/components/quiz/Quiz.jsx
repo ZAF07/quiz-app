@@ -9,7 +9,6 @@ import {
   RadioGroup,
   Grid,
   Typography,
-  Chip,
   Avatar,
   Button,
 } from '@material-ui/core';
@@ -39,14 +38,19 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '5%',
     paddingRight: '5%',
   },
-  rocketContainer: {
+  quizHeaderContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
     width: '100%',
   },
   rocketAndSignIn: {
     padding: '3%',
+    display: 'flex',
   },
+  topicHeader: {
+    marginLeft: '8%',
+    textTransform: 'capitalize',
+  },
+
   quizContainer: {
     paddingTop: '2%',
     paddingLeft: '5%',
@@ -54,18 +58,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center'
   }
-
-
-
 }))
 
-
-SyntaxHighlighter.registerLanguage('javascript', js);
+let reactSyntaxLang;
+let topicLogo;
+      
 
 const code = `function main(input\n {\n  return 'hello world' \n }`;
 
 // COMPONENT
-// function Quiz({topic, nextQs, questionFromDB, questionNum}) {
 function Quiz({topic, questionFromDB, alan}) {
   console.log('QUIZ RENDERED');
 
@@ -88,19 +89,29 @@ const answersRef = useRef()
 // ABSTRACTING THE CORRECT ANSWER
   if (questionFromDB && questionNum < questionFromDB.questionsResults.length){
     correctAnswerRef.current = questionFromDB.questionsResults[questionNum].answer;
-    // scoreParaRef.current.innerHTML = correctAnswerRef.current;
   }
 
-    // DISPLAY SCORE 
-  // if (questionFromDB && questionNum > questionFromDB.questionsResults.length) {
-  //   scoreParaRef.current.innerHTML = 'questionNum'
-  // }
-
   console.log('answer -> ', questionNum);
-  // DISPLAY trackScoreRef.current value AFTER END OF QUIZ
-  // if (questionFromDB && questionNum >= questionFromDB.questionsResults.length) {
-  //   // scoreParaRef.current.innerHTML = `${trackScoreRef.current} score at ref`
-  // }
+
+    switch (topic) {
+          case 'javascript':
+            topicLogo = javascript
+            reactSyntaxLang = js
+            break;
+          case 'serverside':
+            topicLogo = serverside
+            break
+          case 'sql':
+            topicLogo = sqlLogo  
+            reactSyntaxLang = sql
+            break
+          default:
+            topicLogo = javascript
+            reactSyntaxLang = js
+            break;
+        }
+
+SyntaxHighlighter.registerLanguage('javascript', reactSyntaxLang);
 
    useEffect(() => {
      console.log('ALAN AVBJUVUJBV --> ', alan);
@@ -112,16 +123,11 @@ const answersRef = useRef()
 
         key: env.ALAN,
         onCommand:(commandData) => {
-          // if (commandData.speak) {
-          //   alanBtn.activate();
-            
-          // }
+
           if (commandData.answer) {
-            // handleAnswerSelected()
             console.log('ALAN SAYS ', commandData.answer);
             const userSelect = commandData.answer
             const index = Number(userSelect)
-            // handleAlan(index)
             const userAnswer = answersRef.current[index].choice
             handleAnswerSelected(userAnswer)
           }
@@ -146,6 +152,7 @@ const answersRef = useRef()
               alanInstance.current.playText(toReadChoices[count])
               count += 1
             }
+            alanInstance.current.playText('which do you think is the right answer?')
           }
 
           // READ SPECIFIC CHOICE
@@ -169,59 +176,22 @@ const answersRef = useRef()
           //  AFTER QUIZ, RETURN HOME COMMAND
           if (commandData.backHome) {
             setTimeout(window.location.reload(), 5000)
-            // window.location.reload();
           }
 
         }
       })
-
-      // // alanInstance.current.deactivate();
     }
    }, [])
 
-             if (questionFromDB && questionNum >= questionFromDB.questionsResults.length) {
-            alanInstance.current.activate()
-            alanInstance.current.playText('Nice work! You\'ve completed the quiz. Check out how you did!')
-          }
+  if (questionFromDB && questionNum >= questionFromDB.questionsResults.length) {
 
-          //   if (questionFromDB && questionNum < questionFromDB.questionsResults.length && alanInstance.current) {
-          //   console.log('QUESTON HERE ALANNNNN');
-          //   // alanInstance.current.activate()
-          //   alanInstance.current.playText(questionFromDB.questionsResults[questionNum].question)
-          // }
-
-
-        
-      // if (questionFromDB && questionFromDB.questionsResults.length) {
-      //   console.log('its here');
-      //           // // AUTO ALAN
-      //     alanInstance.current.activate();
-      //     alanInstance.current.playText(questionFromDB.questionsResults[questionNum].question);
-      // }
+    alanInstance.current.activate()
+    alanInstance.current.playText('Nice work! You\'ve completed the quiz. Check out how you did!')
+  }
 
   // console.log('from qwuix' ,question);
   console.log('***** FROM QUIZ --> ', questionFromDB);
   console.log('questionNum --> ', questionNum);
-
-// console.log('quiz --> ', question);
-
-//  ALAN SPEAKS AFTER EACH QUIZ COMPLETION
-// if (!question) {
-//   scoreParaRef.current.innerHTML = correctAnswerRef.current
-//   // alanInstance.current.activate();
-//   // alanInstance.current.playText("Nice work! You've completed the quiz. Want to keep track of how you did? Sign up now!");
-
-// };
-
-const optionsLetter = ['A', 'B', 'C', 'D'];
-  let selection;
-  if (questionFromDB && questionFromDB.choicesResults.length) {  
-     selection = questionFromDB.choicesResults.map((a, i) => (
-       <>
-       <option key={i} value={a[i]}>{optionsLetter[i]}</option>
-     </>
-     )) 
-  }
 
   const noQuestion = (
     <>
@@ -243,23 +213,6 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
     return null
   }
 
-
-        let topicLogo;
-        switch (topic) {
-          case 'javascript':
-            topicLogo = javascript
-            break;
-          case 'serverside':
-            topicLogo = serverside
-            break
-          case 'sql':
-            topicLogo = sqlLogo  
-            break
-          default:
-            topicLogo = javascript
-            break;
-        }
-
   // DISPLAYING THE CURRENT QUESTION AND CHOICES
   const questionAndChoices = (id) => {
 
@@ -270,18 +223,11 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
       choicesList.push({choice: questionFromDB.questionsResults[questionNum].answer})
       console.log('choicesList -> ', choicesList);
     
-
-        answersRef.current = choicesList
-     
+      answersRef.current = choicesList
 
       // MAPPING CURRENT CHOICES INTO RADIO BUTTONS
       let currentOptions
-    //   currentOptions = choicesList.map((qs, key) => (
-    //     <>
-    //        <FormControlLabel key={qs} value={qs.choice} control={<Radio />} label={qs.choice} />
-    //     </>
-    // )) 
-      
+      const optionsLetter = ['A', 'B', 'C', 'D'];
         currentOptions = choicesList.map((qs, key) => {
           // answersRef.current.push(qs)
           return (
@@ -292,17 +238,9 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
                 />
               </>
           )
-
         })
 
-     
-
         const currentQuestion = questionFromDB.questionsResults[questionNum].question 
-        // if question, Alan to read
-        // if (currentQuestion) {
-        //   alanInstance.current.activate();
-        //   alanInstance.current.playText(currentQuestion)
-        // }
 
         console.log('thisis vchia --<> ', choicesList);
     return (
@@ -322,70 +260,19 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
             </RadioGroup>
           </FormControl>
       
-      {/* <select>
-      {selection}
-      </select> */}
       <Grid item sm={12} md={6} lg={4}>
       <Button variant='contained' color='secondary' onClick={() => handleAnswerSelected()}>Next</Button>
 
       </Grid>
       <hr/>
-      {/* <h1>require snippet: {questionFromDB.questionsResults[0].require_snippet}</h1>
-      <h1>question id: {questionFromDB.questionsResults[0].question_id}</h1> */}
       </>
     )
-  }
-
-  const handleAlan = (index) => {
-    // alert('haha')
-    const i = Number(index);
-    const answer = correctAnswerRef.current;
-    const userAnswer = answersRef.current[i].choice
-    console.log('USER ANSWER ALAN -> ', userAnswer);
-    console.log('CORRECT ANSWER ALAN -> ', answer === userAnswer);
-        if (correctAnswerRef.current === userAnswer) {
-      trackScoreRef.current ++;
-      console.log('correct -> ', trackScoreRef.current);
-      // CREATE RESULT OBJECT
-      setResults((prev => {
-        const result = {
-          question: questionFromDB.questionsResults[questionNum].question,
-          answer: questionFromDB.questionsResults[questionNum].answer,
-          selected: userAnswer,
-          correct: true
-        }
-        return [...prev, result]
-      }))
-
-        // const result = {
-        //   question: questionFromDB.questionsResults[questionNum.current].question,
-        //   answer: questionFromDB.questionsResults[questionNum.current].answer,
-        //   selected: value,
-        //   correct: true
-        // }
-      // resultRef.current = [...resultRef.current, result]
-
-    } else {
-      console.log(questionNum);
-      setResults((prev => {
-        const result = {
-          question: questionFromDB.questionsResults[questionNum].question,
-          answer: questionFromDB.questionsResults[questionNum].answer,
-          selected: userAnswer,
-          correct: false,
-        }
-        return [...prev, result];
-      }))
-    }
-    // questionNum.current ++;
-    setQuestionNum( questionNum ++)
   }
 
   // HANDLE FUNCTION FOR RADIO BUTTON
   const handleChange = (e) => {
     console.log('value/valueRef changed in the handleChange function (RadioGroup');
     setValue(e.target.value);
-    // valueRef.current = e.target.value
   }
 
   // IF USER SELECTS CORRECT ANSWER, ADD 1 TO SCORE AND INCREMENT CURRENT QUESTION REF
@@ -429,20 +316,20 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
       // questionNum.current ++;
     setQuestionNum( questionNum += 1)
     }
-
   }
 
   return (
     <div>
 
-          <Grid container columns={12}  className={styles.rocketContainer}>
+          <Grid container columns={12}  className={styles.quizHeaderContainer}>
+     
           <Grid item className={styles.rocketAndSignIn}>
           {/* <Typography variant='h3'>🚀</Typography> */}
           <Avatar alt='logo' src={topicLogo} />
+          <Typography variant='h6' className={styles.topicHeader}>
+            {topic}
+          </Typography>
           </Grid>
-          {/* <Grid item className={styles.rocketAndSignIn}>
-            <Chip label='Sign In' variant='outlined' onClick={() => alert('Signed In')}/>
-          </Grid> */}
         </Grid>
     
     <Grid container direction='column' className={styles.quizContainer}>
@@ -455,27 +342,8 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
         questionNum >= questionFromDB.questionsResults.length
         &&
         <DashboardAfterQuiz results={results} finalScore={trackScoreRef.current} />
-        // <DashboardAfterQuiz results={resultRef.current} finalScore={trackScoreRef.current} />
       }
     </Grid>
-
-   
-      {/* <p ref={scoreParaRef}>a</p> */}
-      {/* {
-      questionFromDB
-      &&
-      questionNum.current >= questionFromDB.questionsResults.length
-      &&
-      <p>{trackScoreRef.current}</p>
-      } */}
-
-
-
-      {/* <div style={{marginLeft: '15%', marginRight: '15%'}}>
-        <SyntaxHighlighter language="javascript" style={docco}>
-        {code}
-        </SyntaxHighlighter>
-      </div> */}
     </div>
   )
 }

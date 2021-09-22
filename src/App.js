@@ -13,11 +13,12 @@ import axios from 'axios';
 import Home from './components/home/Home';
 import Quiz from './components/quiz/Quiz';
 import Resources from './components/resources/Resources';
-import DialogHelp from './components/dialog/DialogHelp';
+
 
 function App() {
 
-console.log('((((())))) app rendered )))))');
+  console.log('((((())))) app rendered )))))');
+
   // alan instance
   const alanInstance = useRef(null);
   const currentPage = window.location.pathname;
@@ -84,7 +85,6 @@ console.log('((((())))) app rendered )))))');
             currentPage === '/' &&
             <Quiz topic={topic} questionFromDB={question} questionNum={qnsNumber} nextQs={handleNextQs} alan={alanInstance.current}/>
           }
-
 
           <Switch>
             {/* <Redirect exact from='/' to='/quiz/:start' />  */}

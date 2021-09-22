@@ -80,7 +80,6 @@ function Home(props) {
 
         <Grid item md={12}>
           <Typography variant="h2">Let's start to learn !</Typography>
-          <Typography variant='caption'>(Ask me what i can do 🤓)</Typography>
         </Grid>
 
         <Grid container className={styles.container} spacing={5}>

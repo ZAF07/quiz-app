@@ -198,8 +198,7 @@ SyntaxHighlighter.registerLanguage('javascript', reactSyntaxLang);
 
   const noQuestion = (
     <>
-      <h2>Your're done! Want to keep track of how you did? Sign up!</h2>
-      <a href='http://localhost:3000'>Back to home</a>
+      <h1>Well done! 😎 You made it to the end!</h1>
     </>
   )
 

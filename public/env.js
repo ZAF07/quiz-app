@@ -1,4 +1,8 @@
 window.env = {
   "PORT": "3000",
-  "ALAN": "9fa16eb26954d9748df6b4837a7673222e956eca572e1d8b807a3e2338fdd0dc/stage"
+  "ALAN": "9fa16eb26954d9748df6b4837a7673222e956eca572e1d8b807a3e2338fdd0dc/stage",
+  "REACT_APP_CLIENT_ID": "46c3376d220c3d6c0223",
+  "REACT_APP_REDIRECT_URI": "http://localhost:3000",
+  "REACT_APP_CLIENT_SECRET": "019e1af94436a1d72cf7c2648cd212d1174b5a24",
+  "REACT_APP_PROXY_URL": "http://localhost:5000"
 };

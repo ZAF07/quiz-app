@@ -4,9 +4,6 @@ import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import App from './App';
 
-
-import StateProvider from './store/store';
-
 //  THEME FROR APP
 const theme = createTheme({
   palette: {
@@ -34,11 +31,9 @@ const theme = createTheme({
 
 ReactDOM.render(
   <ThemeProvider theme={theme}> 
-  <CssBaseline>
-    <StateProvider>
+    <CssBaseline>
       <App />
-    </StateProvider>
-  </CssBaseline>
+    </CssBaseline>
   </ThemeProvider>,
   document.getElementById('root')
 );

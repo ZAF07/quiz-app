@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import jsImg from '../../images/javascript.png';
 import bckEnd from '../../images/serverside.png';
 import sqlImg from '../../images/sql.png';
+import reactImg from '../../images/react.png';
 
 import { 
   Avatar,
@@ -122,27 +123,36 @@ function Home(props) {
               </CardActions>
             </Card>
           </Grid>
+
           <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
+                <Avatar alt='react' src={reactImg} />
                 <Typography variant='h6'>
                   Explain Quiz Here
                 </Typography>
+                <Typography variant='caption'>Train your skills in SQL</Typography>
               </CardContent>
               <CardActions>
-                <Button onClick={() => enterQuiz('javascript')}>Launch Javascript</Button>
+                <Button variant='outlined' onClick={() => enterQuiz('serverside')}>
+                  <Typography variant='caption'>Launch React Quiz</Typography>
+                </Button>
               </CardActions>
             </Card>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
+                <Avatar alt='react' src={reactImg} />
                 <Typography variant='h6'>
-                  Explain Quiz Here
+                  React JS
                 </Typography>
+                <Typography variant='caption'>Train your skills in SQL</Typography>
               </CardContent>
               <CardActions>
-                <Button onClick={() => enterQuiz('javascript')}>Launch Javascript</Button>
+                <Button variant='outlined' onClick={() => enterQuiz('serverside')}>
+                  <Typography variant='caption'>Launch React Quiz</Typography>
+                </Button>
               </CardActions>
             </Card>
           </Grid>

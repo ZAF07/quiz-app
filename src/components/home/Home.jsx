@@ -18,6 +18,8 @@ import {
   Button
 } from '@material-ui/core';
 
+import DialogHelp from '../../components/dialog/DialogHelp';
+
 
 //  CUSTOM STYLES
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
   },
   rocketAndSignIn: {
     padding: '3%',
+  },
+  rocketSignInAndHelp: {
+    display: 'flex'
   },
   hov: {
   '&:hover': {
@@ -64,15 +69,18 @@ function Home(props) {
           <Grid item className={styles.rocketAndSignIn}>
           <Typography variant='h1'>🚀</Typography>
           </Grid>
-          <Grid item className={styles.rocketAndSignIn}>
-            <Chip label='Sign In' variant='outlined' onClick={() => alert('Signed In')}/>
+          <Grid item className={[styles.rocketAndSignIn, styles.rocketSignInAndHelp]}>
+            {/* <Chip label='Sigsn In' variant='outlined' onClick={() => alert('Signed In')}/> */}
+            <DialogHelp/>
           </Grid>
+
         </Grid>
 
       <Grid container className={styles.container} direction="column">
 
         <Grid item md={12}>
           <Typography variant="h2">Let's start to learn !</Typography>
+          <Typography variant='caption'>(Ask me what i can do 🤓)</Typography>
         </Grid>
 
         <Grid container className={styles.container} spacing={5}>
@@ -82,7 +90,7 @@ function Home(props) {
               <CardContent>
                 <Avatar alt='js' src={jsImg} />
                 <Typography variant='h6'>
-                  Basics
+                  Javascript
                 </Typography>
                 <Typography variant='caption'>Train fundamentals with javascript</Typography>
               </CardContent>

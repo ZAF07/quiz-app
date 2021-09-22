@@ -11,6 +11,7 @@ import {
   Typography,
   Avatar,
   Button,
+  Dialog,
 } from '@material-ui/core';
 import alanBtn from '@alan-ai/alan-sdk-web';
 
@@ -27,6 +28,7 @@ import javascript from '../../images/javascript.png';
 import serverside from '../../images/serverside.png';
 import sqlLogo from '../../images/sql.png';
 
+import DialogHelp from '../dialog/DialogHelp'
 import DashboardAfterQuiz from '../dashboard/DashboardAfterQuiz';
 
 
@@ -41,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   quizHeaderContainer: {
     display: 'flex',
     width: '100%',
+    justifyContent: 'space-between'
   },
   rocketAndSignIn: {
     padding: '3%',
@@ -60,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-let reactSyntaxLang;
+let reactSyntaxLang = js;
 let topicLogo;
       
 
@@ -330,6 +333,10 @@ SyntaxHighlighter.registerLanguage('javascript', reactSyntaxLang);
             {topic}
           </Typography>
           </Grid>
+          
+          <Grid item className={styles.rocketAndSignIn}>
+            <DialogHelp />
+          </Grid>
         </Grid>
     
     <Grid container direction='column' className={styles.quizContainer}>
@@ -344,6 +351,7 @@ SyntaxHighlighter.registerLanguage('javascript', reactSyntaxLang);
         <DashboardAfterQuiz results={results} finalScore={trackScoreRef.current} />
       }
     </Grid>
+
     </div>
   )
 }

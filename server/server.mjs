@@ -66,4 +66,34 @@ app.get('/api/serverside', async (req, res) => {
   res.json({choicesResults, questionsResults});
 })
 
+//  SQL DATA API
+app.get('/api/sql', async (req, res) => {
+
+  const choicesResults = [] 
+  const questionsResults = [] 
+
+  const questions = await db.SqlQuestion.findAll({
+    attributes: ['question','answer', 'require_snippet', 'question_id'],
+  });
+
+  for (let i = 0; i < questions.length; i += 1) {
+    const {dataValues} = questions[i]
+    questionsResults.push(dataValues); 
+  }
+
+  const choices = await db.SqlChoice.findAll({
+  
+    attributes: ['choice', 'question_id'],
+  });
+
+  for (let i = 0; i < choices.length; i += 1) {
+    const {dataValues} = choices[i]
+    choicesResults.push(dataValues); 
+  }
+
+  console.log('choices -->> ', choicesResults);
+  console.log('questions -->> ', questionsResults);
+  res.json({choicesResults, questionsResults});
+})
+
 app.listen(5000, console.log('http://localhost:5000'))

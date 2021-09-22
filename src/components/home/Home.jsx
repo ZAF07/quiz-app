@@ -117,7 +117,7 @@ function Home(props) {
                 <Typography variant='caption'>Train your skills in SQL</Typography>
               </CardContent>
               <CardActions>
-                <Button variant='outlined' onClick={() => enterQuiz('serverside')}>
+                <Button variant='outlined' onClick={() => enterQuiz('sql')}>
                   <Typography variant='caption'>Launch SQL Quiz</Typography>
                 </Button>
               </CardActions>

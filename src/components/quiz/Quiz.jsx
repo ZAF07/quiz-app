@@ -26,7 +26,7 @@ import {atelierCaveDark} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import javascript from '../../images/javascript.png';
 import serverside from '../../images/serverside.png';
-import sqlImg from '../../images/sql.png';
+import sqlLogo from '../../images/sql.png';
 
 import DashboardAfterQuiz from '../dashboard/DashboardAfterQuiz';
 
@@ -253,7 +253,7 @@ const optionsLetter = ['A', 'B', 'C', 'D'];
             topicLogo = serverside
             break
           case 'sql':
-            topicLogo = sql  
+            topicLogo = sqlLogo  
             break
           default:
             topicLogo = javascript

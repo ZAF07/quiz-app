@@ -3,9 +3,9 @@ import React , {useState, useEffect, useRef} from 'react';
 import { BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useLocation,
-  useParams
+  // Link,
+  // useLocation,
+  // useParams
 } from 'react-router-dom';
 import alanBtn from "@alan-ai/alan-sdk-web";
 import axios from 'axios';
@@ -41,39 +41,15 @@ console.log('((((())))) app rendered )))))');
             // handleNextQs();
             handleStart(commandData.startTopic)
           }
-  
-          // if (commandData.answer) {
-  
-          //   /* received the selected answer from ALAN AI, should store this in some state to update the user DB if wrong answer
-          //    also use this data to instantly check if answer selected is correct and react accordingly
-          //    vvvvvvvvvvvvvvvv
-          //    */
-  
-          //   // alert('User selected : ', commandData.answer);
-          //   console.log('ANSWERED 434344');
-          //   handleNextQs();
-          // }
-  
-          // auto play alan
-          // if (commandData.startQ) {
-          //   handleStart(commandData.startQ)
-          // }
         }
-
-
-
-      })
-      // // AUTO ALAN
-      // alanInstance.current.activate();
-      // alanInstance.current.playText(`Hello effy! Welcome to the quiz. What topic would you like to practice today?`);
-      // // alanInstance.current.deactivate();
+      });
     }
   }, [])
 
-          if (quizSelected) {
-            alanInstance.current.deactivate()
-            alanInstance.current.remove()
-          }
+  if (quizSelected) {
+    alanInstance.current.deactivate()
+    alanInstance.current.remove()
+  }
 
   //  FEATURE FOR CLIENT SIDE AUTHORISATION (show all quizzes but allow only basics for non log-in)
   const handleStart = (topic) => {

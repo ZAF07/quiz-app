@@ -4,7 +4,7 @@ function Resources() {
 
     // alan instance
   const alanInstance = useRef(null);
-  const currentPage = window.location.pathname
+  // const currentPage = window.location.pathname
 
     useEffect(() => {
 

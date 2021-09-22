@@ -80,8 +80,8 @@ function Quiz({topic, questionFromDB, alan}) {
   // const questionNum = useRef(0);
   let [questionNum, setQuestionNum] = useState(0);
 
-  const valueRef = useRef()
-  const resultRef = useRef([])
+  // const valueRef = useRef()
+  // const resultRef = useRef([])
 
 const answersRef = useRef()
 

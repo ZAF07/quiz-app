@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import db from './model/models/index.mjs';
+import {} from 'dotenv/config';
 
 const app = express();
 
@@ -96,4 +97,6 @@ app.get('/api/sql', async (req, res) => {
   res.json({choicesResults, questionsResults});
 })
 
-app.listen(5000, console.log('http://localhost:5000'))
+const PORT = 5000 || process.env.PORT;
+
+app.listen(PORT, console.log('http://localhost:5000'))

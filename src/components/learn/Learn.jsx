@@ -41,8 +41,8 @@ function Learn() {
         }
       })
       // AUTO ALAN
-      // alanInstance.current.activate();
-      // alanInstance.current.playText(`lets learn ${topic}`);
+      alanInstance.current.activate();
+      alanInstance.current.playText(`lets learn ${topic}`);
     } 
   }, [])
 

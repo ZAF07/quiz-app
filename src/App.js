@@ -14,6 +14,7 @@ import Home from './components/home/Home';
 import Quiz from './components/quiz/Quiz';
 import Learn from './components/learn/Learn';
 
+const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
 
 function App() {
 
@@ -46,6 +47,21 @@ function App() {
         }
       });
     }
+
+      document.addEventListener('keydown', (e) => {
+      const keyCode = e.code;
+
+      if (keyCode === 'Space') {
+        if (alanInstance.current.isActive()) {
+          // alert('actiuve')
+           alanInstance.current.deactivate()
+        } else {
+          alanInstance.current.activate()
+          // alanInstance.current.playText('I have arrived')
+        }
+      }
+    })
+
   }, [])
 
   if (alanInstance.current) {

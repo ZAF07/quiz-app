@@ -197,7 +197,6 @@ SyntaxHighlighter.registerLanguage('javascript', reactSyntaxLang);
           // alanInstance.current.playText('I have arrived')
         }
       }
-      
     })
    }, [])
 

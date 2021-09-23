@@ -14,7 +14,7 @@ import Home from './components/home/Home';
 import Quiz from './components/quiz/Quiz';
 import Learn from './components/learn/Learn';
 
-const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
+const REACT_APP_BACKEND_URL = env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
 
 function App() {
 
@@ -78,7 +78,7 @@ function App() {
   //  FEATURE FOR CLIENT SIDE AUTHORISATION (show all quizzes but allow only basics for non log-in)
   const handleStart = (topic) => {
 
-       axios.get(`http://localhost:5000/api/${topic}`)
+       axios.get(`https://zaffere-quiz.herokuapp.com/api/${topic}`)
     .then(({data}) => {
       setQuestion(data)
       console.log(' RECEIVED FROM DB *** -> ', data);

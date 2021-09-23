@@ -4,7 +4,7 @@ import { BrowserRouter as Router,
   Switch,
   Route,
   // Link,
-  // useLocation,
+  useLocation,
   // useParams
 } from 'react-router-dom';
 import alanBtn from "@alan-ai/alan-sdk-web";
@@ -12,7 +12,7 @@ import axios from 'axios';
 
 import Home from './components/home/Home';
 import Quiz from './components/quiz/Quiz';
-import Resources from './components/resources/Resources';
+import Learn from './components/learn/Learn';
 
 
 function App() {
@@ -48,10 +48,16 @@ function App() {
     }
   }, [])
 
-  if (quizSelected) {
-    alanInstance.current.deactivate()
-    alanInstance.current.remove()
+  if (alanInstance.current) {
+
+    if (quizSelected || currentPage !== '/') {
+      alanInstance.current.deactivate()
+      alanInstance.current.remove()
+    }
   }
+  console.log('THIS IS THE CURRENT PAGE -> ', currentPage);
+
+
 
   //  FEATURE FOR CLIENT SIDE AUTHORISATION (show all quizzes but allow only basics for non log-in)
   const handleStart = (topic) => {
@@ -77,7 +83,7 @@ function App() {
           {
             !quizSelected &&
             currentPage === '/' &&
-            <Home enterQuiz={handleStart} />
+            <Home enterQuiz={handleStart}/>
           }
           {
             quizSelected &&
@@ -91,8 +97,8 @@ function App() {
             <Route exact path="/profile">
               {'profile page'}
             </Route>
-            <Route exact path="/resources/:javascript">
-              <Resources />
+            <Route exact path="/learn/:topic">
+              <Learn />
             </Route>
           </Switch>
       </div>

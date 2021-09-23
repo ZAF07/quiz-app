@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 
 
@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core';
 
 import DialogHelp from '../../components/dialog/DialogHelp';
+import DialogLearn from '../../components/dialog/DialogLearn';
 
 
 //  CUSTOM STYLES
@@ -61,17 +62,18 @@ function Home(props) {
   const styles = useStyles();
 
   const {enterQuiz} = props;
+
+
   return (
     <div>
-
-
         <Grid container columns={12}  className={styles.rocketContainer}>
           <Grid item className={styles.rocketAndSignIn}>
           <Typography variant='h1'>🚀</Typography>
           </Grid>
           <Grid item className={[styles.rocketAndSignIn, styles.rocketSignInAndHelp]}>
             {/* <Chip label='Sigsn In' variant='outlined' onClick={() => alert('Signed In')}/> */}
-            <DialogHelp/>
+            <DialogLearn />
+            <DialogHelp />
           </Grid>
 
         </Grid>
@@ -178,13 +180,9 @@ function Home(props) {
                 <Typography variant='caption'>Level up and join Rocket Academy today!</Typography>
               </CardContent>
               <CardActions>
-                <Button variant='outlined'>
+                <Button variant='outlined' href='https://rocketacademy.co' target='blank'>
                   <Typography variant='caption'>
-                    <a href='https://rocketacademy.co'
-                    className={styles.anchorTag}
-                    target='blank'>
                       Launch Rocket ship
-                    </a>
                   </Typography>
                 </Button>
               </CardActions>

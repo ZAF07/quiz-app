@@ -184,6 +184,21 @@ SyntaxHighlighter.registerLanguage('javascript', reactSyntaxLang);
         }
       })
     }
+
+    document.addEventListener('keydown', (e) => {
+      const keyCode = e.code;
+
+      if (keyCode === 'Space') {
+        if (alanInstance.current.isActive()) {
+          // alert('actiuve')
+           alanInstance.current.deactivate()
+        } else {
+          alanInstance.current.activate()
+          // alanInstance.current.playText('I have arrived')
+        }
+      }
+      
+    })
    }, [])
 
   if (questionFromDB && questionNum >= questionFromDB.questionsResults.length) {

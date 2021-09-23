@@ -215,7 +215,7 @@ function DialogLearn({openLearn}) {
                 <Typography variant='h6'>
                   Rocket Academy
                 </Typography>
-                <Typography variant='caption'>Or sign up with Rocket Academy!</Typography>
+                <Typography variant='caption'>Enroll with Rocket Academy!</Typography>
               </CardContent>
               <CardActions>
                 {/* <Button variant='outlined'>

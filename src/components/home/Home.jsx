@@ -149,7 +149,7 @@ function Home(props) {
               </CardContent>
               <CardActions>
                 <Button variant='outlined' onClick={() => enterQuiz('serverside')}>
-                  <Typography variant='caption'>Launch DSA Quiz</Typography>
+                  <Typography variant='caption'>Launch Algo Quiz</Typography>
                 </Button>
               </CardActions>
             </Card>

@@ -20,7 +20,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import jsImg from '../../images/javascript.png';
 import bckEnd from '../../images/serverside.png';
 import sqlImg from '../../images/sql.png';
-import reactImg from '../../images/react.png'
+import reactImg from '../../images/react.png';
+import dsa from '../../images/dsa.png';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -100,6 +101,10 @@ function DialogLearn({openLearn}) {
             <Typography variant='caption' className={styles.topicCards}>
                Server-side scripting is a technique used in web development which involves employing scripts on a web server which produces a response customized for each user's request to the website. The alternative is for the web server itself to deliver a static web page
             </Typography>
+            <Avatar alt='js' src={dsa}/>
+            <Typography variant='caption' className={styles.topicCards}>
+               A data structure is a named location that can be used to store and organize data. And, an algorithm is a collection of steps to solve a particular problem. Learning data structures and algorithms allow us to write efficient and optimized computer programs.
+            </Typography>
             <Avatar alt='js' src={reactImg}/>
             <Typography variant='caption' className={styles.topicCards}>
                React is a free and open-source front-end JavaScript library for building user interfaces or UI components. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications
@@ -173,11 +178,11 @@ function DialogLearn({openLearn}) {
           <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
-                <Avatar alt='react' src={reactImg} />
+                <Avatar alt='react' src={dsa} />
                 <Typography variant='h6'>
-                  Explain Quiz Here
+                  Algorithms
                 </Typography>
-                <Typography variant='caption'>Train your skills in SQL</Typography>
+                <Typography variant='caption'>Train your skills in Algorithms</Typography>
               </CardContent>
               <CardActions>
                 <Button variant='outlined' href='/learn/sql'>

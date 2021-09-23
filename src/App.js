@@ -14,7 +14,7 @@ import Home from './components/home/Home';
 import Quiz from './components/quiz/Quiz';
 import Learn from './components/learn/Learn';
 
-const REACT_APP_BACKEND_URL = env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
+const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
 
 function App() {
 

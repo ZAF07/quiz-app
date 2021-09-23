@@ -47,10 +47,10 @@ function DashboardAfterQuiz({results, finalScore}) {
     }}>
       <h1>Here are your results 🖖:  </h1>
       {finalScoreCalculation}
-      <h1 style={{'color': finalScore > 3 ? 'green': 'red'}}>You scored {finalScore / 5 * 100}%</h1>
+      <h1 style={{'color': finalScore >= 3 ? 'green': 'red'}}>You scored {finalScore / 5 * 100}%</h1>
       {resultList}
       <Button variant='contained' color='secondary'> 
-        <a style={{'color': '#fff', 'textDecoration': 'none'}} href='http://localhost:3000'>Back to home</a>
+        <a style={{'color': '#fff', 'textDecoration': 'none'}} href='https://software-engineering-quiz.netlify.app/'>Back to home</a>
       </Button>
     </div>
   )

@@ -6,6 +6,7 @@ import jsImg from '../../images/javascript.png';
 import bckEnd from '../../images/serverside.png';
 import sqlImg from '../../images/sql.png';
 import reactImg from '../../images/react.png';
+import dsa from '../../images/dsa.png';
 
 import { 
   Avatar,
@@ -140,15 +141,15 @@ function Home(props) {
           <Grid item xs={12} md={6} lg={4}>
             <Card sx={{minWidth: 275}} raised className={styles.hov}>
               <CardContent>
-                <Avatar alt='react' src={reactImg} />
+                <Avatar alt='react' src={dsa} />
                 <Typography variant='h6'>
-                  Explain Quiz Here
+                  Algorithms
                 </Typography>
-                <Typography variant='caption'>Train your skills in SQL</Typography>
+                <Typography variant='caption'>Train your skills in Algorithms</Typography>
               </CardContent>
               <CardActions>
                 <Button variant='outlined' onClick={() => enterQuiz('serverside')}>
-                  <Typography variant='caption'>Launch React Quiz</Typography>
+                  <Typography variant='caption'>Launch DSA Quiz</Typography>
                 </Button>
               </CardActions>
             </Card>
@@ -192,7 +193,7 @@ function Home(props) {
         </Grid>
 
       {/* <button onClick={() => enterQuiz('javascript')}>Javascript</button> */}
-      <a href='/quiz/javascript'>Js</a>
+      {/* <a href='/quiz/javascript'>Js</a> */}
 
       {/* <button onClick={() => enterQuiz('Python 🐍')}>Pyhton</button> */}
     </Grid>
